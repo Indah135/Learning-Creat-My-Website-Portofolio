@@ -45,7 +45,7 @@ export default function Navbar({ isLight, onToggleTheme }) {
             <li key={href}>
               <a
                 href={href}
-                style={activeSection === href.slice(1) ? { color: 'var(--accent2)' } : {}}
+                style={activeSection === href.slice(1) ? { color: 'var(--nav-active)' } : {}}
                 onClick={() => setMenuOpen(false)}
               >
                 {label}
