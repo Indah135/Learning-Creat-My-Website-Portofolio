@@ -2,9 +2,9 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import WordReveal from './WordReveal';
 
 const CONTACTS = [
-  { icon: '📧', label: 'Email',    val: 'alex@example.com',   href: 'mailto:alex@example.com' },
-  { icon: '💼', label: 'LinkedIn', val: 'alexpratama',         href: 'https://linkedin.com/in/alexpratama' },
-  { icon: '🐙', label: 'GitHub',   val: 'alexpratama',         href: 'https://github.com/alexpratama' },
+  { icon: '📧', label: 'Email',    val: 'indahamiati85@gmail.com', href: 'mailto:indahamiati85@gmail.com' },
+  { icon: '💼', label: 'LinkedIn', val: 'indah-amiati',         href: 'https://www.linkedin.com/in/indah-amiati/' },
+  { icon: '🐙', label: 'GitHub',   val: 'Indah135',            href: 'https://github.com/Indah135' },
   { icon: '🐦', label: 'Twitter',  val: '@alexpratama',        href: 'https://twitter.com/alexpratama' },
 ];
 

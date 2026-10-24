@@ -1,6 +1,6 @@
 <div align="center">
 
-# 💫 Indah Amiati — Portfolio Website
+# 💫 [Indah Amiati](https://github.com/Indah135) — Portfolio Website
 
 **Personal portfolio site for a Front-End Developer**
 *built with React 19 + Vite — zero UI libraries, all animations hand-crafted.*
@@ -219,7 +219,8 @@ Dibuat oleh **Indah Amiati** — terbuka untuk kolaborasi, diskusi, dan peluang 
 <div align="center">
 
 [![GitHub](https://img.shields.io/badge/GitHub-Indah135-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Indah135)
-[![Email](https://img.shields.io/badge/Email-Say_Hi-red?style=for-the-badge&logo=gmail&logoColor=white)](mailto:alex@example.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-indah--amiati-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/indah-amiati/)
+[![Email](https://img.shields.io/badge/Email-indahamiati85-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:indahamiati85@gmail.com)
 
 *Jangan ragu untuk membuka issue atau memberikan feedback di repository ini.*
 
