@@ -33,7 +33,10 @@ export default function About() {
             </WordReveal>
           </p>
 
-          <a href="#" className="btn btn-about-cv">
+          <a
+            href="https://docs.google.com/document/d/1zQAjuy9wyccLw32H4nVLFPk3kiOPn_T1gxllGlUPDYs/export?format=pdf"
+            className="btn btn-about-cv"
+          >
             <span>Download CV</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
               <path d="M12 4v12M6 14l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

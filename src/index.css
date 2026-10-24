@@ -77,9 +77,14 @@ body.light {
   --glow:      rgba(42, 125, 225, 0.22);
 }
 
-/* Background putih bersih — warna datang dari blob */
+/* Monsoon Glow — gradient 45° #305282 → #98AFC7 → #E9ECEF */
 body.light {
-  background-image: none;
+  background-color: #e9ecef;
+  background-image: linear-gradient(45deg, #e9ecef 0%, #98afc7 50%, #305282 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 /* ── Light mode blobs ── */
@@ -91,7 +96,7 @@ body.light {
   pointer-events: none;
   overflow: hidden;
 }
-body.light .lm-blobs { display: block; }
+body.light .lm-blobs { display: none; } /* dimatikan — bg memakai gradient Monsoon Glow */
 
 .lm-blob {
   position: absolute;
@@ -138,10 +143,10 @@ body.light .lm-blobs { display: block; }
 
 /* ── Nav ── */
 body.light nav {
-  background: rgba(245, 246, 255, 0.75);
+  background: rgba(245, 246, 255, 0.48);
 }
 body.light nav.scrolled {
-  background: rgba(245, 246, 255, 0.94);
+  background: rgba(245, 246, 255, 0.70);
   border-color: var(--border);
   box-shadow: 0 2px 20px rgba(100, 120, 255, 0.10);
 }
@@ -170,7 +175,9 @@ body.light .hero-scroll-line {
 
 /* ── Cursor glow ── */
 body.light .cursor-glow {
-  background: radial-gradient(circle, rgba(244, 114, 182, 0.12) 0%, rgba(80, 160, 255, 0.06) 40%, transparent 65%);
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(42, 125, 225, 0.18) 0%, rgba(42, 125, 225, 0.07) 40%, transparent 65%);
 }
 
 /* ── Section divider ── */
@@ -429,14 +436,14 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(1, 4, 15, 0.68);
+  background: rgba(1, 4, 15, 0.42);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(56, 110, 200, 0.12);
   transition: background 0.35s, border-color 0.35s, box-shadow 0.35s;
 }
 nav.scrolled {
-  background: rgba(1, 4, 15, 0.94);
+  background: rgba(1, 4, 15, 0.68);
   border-color: var(--border);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
 }
@@ -1420,11 +1427,11 @@ section + section::before {
   transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .btn-about-cv:hover {
-  background: var(--accent3);
-  border-color: var(--accent3);
+  background: #9aa5b8;
+  border-color: #9aa5b8;
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(236, 72, 153, 0.30);
+  box-shadow: 0 12px 28px rgba(154, 165, 184, 0.35);
 }
 
 /* ── About responsive ── */
