@@ -10,9 +10,6 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2024-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![CSS3](https://img.shields.io/badge/CSS3-Custom_Properties-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](#license)
-
-<img src="public/photo/indah2.png" alt="Indah Amiati" width="170" style="border-radius: 50%; border: 4px solid #2a7de1;" />
-
 </div>
 
 ---
