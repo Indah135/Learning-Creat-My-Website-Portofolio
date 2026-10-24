@@ -55,19 +55,30 @@ export default function About() {
             </span>
           </h2>
 
-          <p className="about-role">Informatics Student | Frontend Developer</p>
+          <div className="about-role-row">
+            <p className="about-role">Informatics Student | Frontend Developer</p>
+            <a
+              href="/cv.pdf"
+              download="CV_Indah_Amiati.pdf"
+              className="about-cv-btn"
+              title="Unduh CV"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>Unduh CV</span>
+            </a>
+          </div>
 
           <div className="about-bio">
             <p>
-              Saya adalah mahasiswa Informatika di Universitas Teknologi Digital Indonesia (UTDI),
-              dengan fokus pada pengembangan antarmuka web yang responsif dan mudah digunakan.
-              Saya percaya bahwa teknologi bisa memberikan dampak positif, terutama ketika dibuat dengan
-              desain yang sederhana, fungsional, dan berpusat pada pengguna.
-            </p>
-            <p>
-              Saya selalu tertarik untuk belajar hal baru, meningkatkan keterampilan,
-              serta berkolaborasi dalam tim. Dengan semangat dan rasa ingin tahu yang tinggi,
-              saya berusaha untuk terus berkembang menjadi Frontend Developer yang lebih baik.
+              Saya adalah mahasiswa Informatika UTDI yang berfokus pada Frontend Development. 
+              Saya tertarik membangun antarmuka web yang responsif, fungsional, dan mudah digunakan
+              dengan desain yang sederhana serta berpusat pada pengguna. Saya senang mempelajari 
+              teknologi baru, mengembangkan keterampilan, dan berkolaborasi dalam tim untuk menciptakan 
+              pengalaman web yang menarik dan bermanfaat.
             </p>
           </div>
         </div>
