@@ -196,12 +196,35 @@ body.light section + section::before {
   );
 }
 
-/* ── Cards: skill, project, timeline, contact ── */
-body.light .skills-stage {
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+/* ── Cards: skill, about, gallery, project, timeline, contact ── */
+body.light .about-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(48, 82, 130, 0.2);
 }
-body.light .skills-open {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+body.light .about-card-divider {
+  background: rgba(48, 82, 130, 0.3);
+}
+body.light .about-pill {
+  background: rgba(42, 125, 225, 0.15);
+  border-color: rgba(42, 125, 225, 0.4);
+}
+body.light .about-label,
+body.light .about-name,
+body.light .about-role,
+body.light .about-bio p {
+  text-shadow: none;
+}
+body.light .about-bio p { color: var(--muted); }
+body.light .edu-meta { color: var(--muted); }
+body.light .gallery-arrow {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(48, 82, 130, 0.25);
+  color: rgba(7, 21, 54, 0.9);
+}
+body.light .gallery-arrow:hover {
+  background: var(--accent2);
+  border-color: transparent;
+  color: #fff;
 }
 body.light .project-card {
   background: var(--surface);
@@ -1333,43 +1356,101 @@ section + section::before {
 }
 
 /* ═══════════════════════════════════════════════════════
-   ABOUT
-═══════════════════════════════════════════════════════ */
-/* Lebarkan section about melampaui max-w global */
+   ABOUT — eyebrow, nama, bio, 3 kartu (Education/Skills/Interests)
+══════════════════════════════════════════════════════ */
 #about {
   max-width: 1300px;
-  overflow: visible;
-  padding-bottom: var(--sp-10);
+  padding-top: var(--sp-2);
+  padding-bottom: var(--sp-8);
+  text-align: left;
+}
+/* Dekatkan eyebrow dengan garis pembatas section */
+#about::before {
+  margin-bottom: var(--sp-5);
 }
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr minmax(420px, 700px);
-  gap: var(--sp-16);
-  align-items: center;
-}
-
-/* ── Visual: foto + refleksi kaca aesthetic ── */
-.about-photo-wrap {
+.about-eyebrow {
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
+  justify-content: flex-start;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
 }
+.about-label {
+  font-size: 0.95rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  text-shadow: 0 1px 8px rgba(1, 8, 25, 0.65);
+}
+
+.about-name {
+  margin-bottom: var(--sp-4);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: var(--fw-black);
+  line-height: 1.08;
+  letter-spacing: -1px;
+  color: var(--text);
+  text-shadow: 0 2px 18px rgba(1, 8, 25, 0.6);
+}
+.about-hi { display: block; }
+.about-full {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: var(--accent2);
+  white-space: nowrap;
+}
+.about-heart {
+  width: 30px;
+  height: 30px;
+  margin-top: 4px;
+  transform: rotate(10deg);
+}
+
+.about-role {
+  margin-bottom: var(--sp-6);
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+  text-shadow: 0 1px 10px rgba(1, 8, 25, 0.6);
+}
+
+.about-bio {
+  max-width: 650px;
+  margin: 0;
+}
+.about-bio p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #b9c7dd;
+  text-shadow: 0 1px 10px rgba(1, 8, 25, 0.6);
+}
+.about-bio p + p {
+  margin-top: var(--sp-5);
+}
+
+.about-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-10);
+}
+.about-intro { min-width: 0; }
 .about-visual {
   position: relative;
-  width: 100%;
-  max-width: 700px;
-  margin-bottom: 14%;
-  animation: aboutFloat 5.5s ease-in-out infinite;
+  min-width: 0;
+  margin-bottom: 16%;
 }
-.about-illustration {
+.about-visual img {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
-  filter: brightness(0.92) drop-shadow(0 12px 24px rgba(1, 8, 25, 0.20));
+  filter: drop-shadow(0 20px 42px rgba(2, 10, 30, 0.5));
 }
-/* Bayangan seperti kaca — refleksi cermin di bawah foto */
+/* Refleksi seperti pantulan kaca di bawah gambar */
 .about-visual::after {
   content: '';
   position: absolute;
@@ -1385,285 +1466,219 @@ section + section::before {
   opacity: 0.5;
   pointer-events: none;
 }
-@keyframes aboutFloat {
-  0%, 100% { transform: translateY(0); }
-  50%     { transform: translateY(-14px); }
-}
 
-/* ── About text ── */
-.about-heading {
-  font-size: clamp(3rem, 6vw, 4.8rem);
-  font-weight: var(--fw-black);
+.about-cards {
+  display: grid;
+  grid-template-columns: 1.3fr 1.9fr 1fr;
+  gap: var(--sp-6);
+  text-align: left;
+}
+.about-card {
+  padding: var(--sp-6) var(--sp-8);
+  border: 1px solid rgba(130, 170, 255, 0.16);
+  border-radius: 20px;
+  background: linear-gradient(155deg, rgba(20, 36, 70, 0.72), rgba(9, 18, 38, 0.68));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.about-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+.about-card-head svg {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  color: var(--accent2);
+}
+.about-card-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.24);
+}
+.about-card-head h3 {
+  font-size: 1.2rem;
+  font-weight: var(--fw-semi);
   color: var(--text);
-  letter-spacing: -2px;
-  margin-bottom: var(--sp-6);
-  line-height: 1.02;
-  text-shadow: 0 4px 30px rgba(42, 125, 225, 0.28);
 }
-.about-text p {
-  font-size: 1.02rem;
-  color: var(--muted);
-  line-height: var(--lh);
-  margin-bottom: var(--sp-4);
-  max-width: 56ch;
-}
-.about-text strong { color: var(--text); font-weight: var(--fw-semi); }
 
-/* ── CV button ── */
-.btn-about-cv {
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+.edu-school {
+  margin-bottom: 4px;
+  font-size: 1rem;
+  font-weight: var(--fw-semi);
+  line-height: 1.45;
+  color: var(--accent2);
+}
+.edu-meta {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(230, 237, 243, 0.8);
+}
+
+.about-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.about-pill {
   display: inline-flex;
   align-items: center;
-  gap: var(--sp-2);
-  padding: 0.72rem 2rem;
+  padding: 8px 15px;
+  border: 1px solid rgba(130, 175, 255, 0.35);
   border-radius: var(--r-full);
-  background: var(--surface2);
-  border: 1.5px solid var(--border);
+  background: rgba(37, 72, 128, 0.72);
+  font-size: 0.87rem;
+  font-weight: 500;
   color: var(--text);
-  font-family: var(--font);
-  font-size: var(--fs-md);
-  font-weight: var(--fw-semi);
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 0 8px 22px rgba(1, 8, 25, 0.28);
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
-.btn-about-cv:hover {
-  background: #9aa5b8;
-  border-color: #9aa5b8;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(154, 165, 184, 0.35);
+
+.interest-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-6) var(--sp-4);
+}
+.interest-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+.interest-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--accent2);
 }
 
 /* ── About responsive ── */
 @media (max-width: 900px) {
-  #about { max-width: 100%; }
-  .about-grid {
-    grid-template-columns: 1fr minmax(320px, 480px);
-    gap: var(--sp-10);
-  }
-}
-@media (max-width: 680px) {
-  .about-grid {
+  .about-top {
     grid-template-columns: 1fr;
     gap: var(--sp-6);
   }
-  .about-photo-wrap { justify-content: center; }
-  .about-visual { max-width: 500px; }
+  .about-visual { max-width: 440px; }
+  .about-cards {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
-   SKILLS — morph slider stage (WebGL)
+   PROJECTS — galeri: coverflow, panah
 ══════════════════════════════════════════════════════ */
-#skills { padding-top: var(--sp-8); }
-
-.skills-stage {
-  position: relative;
-  background: var(--surface);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border);
-  border-radius: var(--r-xl);
-  padding: var(--sp-4);
-}
-
-.morph-slider {
-  position: relative;
-  width: 100%;
-  height: clamp(340px, 56vh, 540px);
+#projects {
   overflow: hidden;
-  background: #0c0c0e;
-  user-select: none;
-  touch-action: pan-y;
 }
 
-.morph-slider-stage {
-  position: absolute;
-  inset: 0;
+.gallery-stage {
+  position: relative;
+  margin-top: var(--sp-6);
+  --card-w: clamp(210px, 30vw, 300px);
+  --card-h: calc(var(--card-w) * 16 / 9);
+  height: var(--card-h);
+  touch-action: pan-y;
   cursor: grab;
   outline: none;
 }
-.morph-slider-stage:active { cursor: grabbing; }
-.morph-slider-stage:focus-visible {
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7);
+.gallery-stage:active {
+  cursor: grabbing;
 }
-.morph-slider-canvas {
+.gallery-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  background: #071536;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.55s ease,
+    filter 0.55s ease;
+  will-change: transform, opacity;
+  cursor: pointer;
+  user-select: none;
+}
+.gallery-card.is-active {
+  box-shadow:
+    0 36px 80px rgba(0, 0, 0, 0.6),
+    0 0 50px rgba(42, 125, 225, 0.22);
+}
+.gallery-card canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gallery-card img {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
-
-/* Fallback bila WebGL tidak tersedia */
-.morph-slider-fallback {
-  position: absolute;
-  inset: 0;
+/* Panah kiri/kanan — di bawah carousel, gaya referensi */
+.gallery-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: var(--sp-6);
+}
+.gallery-arrow {
   display: grid;
   place-items: center;
-  padding: var(--sp-6);
-  background: linear-gradient(165deg, #12417f 0%, #0a1f4d 55%, #071536 100%);
-}
-.morph-slider-fallback-text {
-  grid-area: 1 / 1;
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
-  font-weight: var(--fw-bold);
-  color: #eaf2ff;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(12px);
-  filter: blur(6px);
-  transition:
-    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.morph-slider-fallback-text.is-active {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-/* Caption pill — kiri bawah */
-.morph-slider-caption {
-  position: absolute;
-  left: 22px;
-  bottom: 22px;
-  z-index: 2;
-  max-width: 70%;
-  pointer-events: none;
-  display: grid;
-}
-.morph-slider-caption-text {
-  grid-area: 1 / 1;
-  justify-self: start;
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: var(--fw-semi);
-  letter-spacing: 0.01em;
-  color: #fff;
-  background: rgba(10, 10, 12, 0.42);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  opacity: 0;
-  transform: translateY(12px);
-  filter: blur(6px);
-  transition:
-    opacity var(--ms-swap) cubic-bezier(0.16, 1, 0.3, 1),
-    transform var(--ms-swap) cubic-bezier(0.16, 1, 0.3, 1),
-    filter var(--ms-swap) cubic-bezier(0.16, 1, 0.3, 1);
-}
-.morph-slider-caption-text.is-active {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-/* Tombol panah kiri/kanan */
-.morph-slider-controls {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 16px;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-.morph-slider-btn {
-  pointer-events: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--border);
   border-radius: 50%;
-  color: #fff;
-  background: rgba(12, 12, 14, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
   cursor: pointer;
   transition:
-    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
     background 0.25s ease,
     border-color 0.25s ease,
-    box-shadow 0.25s ease;
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.morph-slider-btn:hover {
-  background: rgba(42, 125, 225, 0.5);
-  border-color: rgba(158, 200, 255, 0.75);
-  box-shadow: 0 8px 20px rgba(42, 125, 225, 0.35);
-  transform: scale(1.06);
-}
-.morph-slider-btn:active { transform: scale(0.96); }
-.morph-slider-btn:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.8);
-  outline-offset: 2px;
-}
-
-/* Indikator titik */
-.morph-slider-indicators {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 18px;
-  z-index: 3;
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
-}
-.morph-slider-dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: none;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.35);
-  cursor: pointer;
-  transition:
-    width var(--ms-dot) cubic-bezier(0.16, 1, 0.3, 1),
-    background var(--ms-dot) ease;
-}
-.morph-slider-dot.is-active {
-  width: 22px;
-  background: rgba(255, 255, 255, 0.95);
-}
-.morph-slider-dot:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.8);
-  outline-offset: 2px;
-}
-
-/* Badge panah kanan atas */
-.skills-open {
-  position: absolute;
-  top: var(--sp-4);
-  right: var(--sp-4);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  z-index: 4;
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-}
-.skills-open:hover {
+.gallery-arrow:hover {
   background: var(--accent2);
   border-color: transparent;
   color: #fff;
-  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(42, 125, 225, 0.4);
+  transform: translateY(-2px);
+}
+.gallery-arrow:active {
+  transform: translateY(0) scale(0.96);
+}
+.gallery-arrow:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+}
+.gallery-arrow:disabled {
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .morph-slider-caption-text,
-  .morph-slider-btn,
-  .morph-slider-dot {
+  .gallery-card,
+  .gallery-arrow {
     transition: none;
   }
 }
@@ -1675,6 +1690,7 @@ section + section::before {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--sp-6);
+  margin-top: var(--sp-12);
 }
 
 .project-card {
@@ -1972,14 +1988,8 @@ footer {
   }
   .stat-divider { display: none; }
 
-
-  .skills-stage { padding: var(--sp-3); }
-  .morph-slider { height: clamp(300px, 48vh, 440px); }
-  .morph-slider-controls { padding: 0 10px; }
-  .morph-slider-btn { width: 34px; height: 34px; }
-  .morph-slider-caption { left: 14px; bottom: 46px; max-width: calc(100% - 28px); }
-  .morph-slider-caption-text { font-size: 13px; padding: 6px 12px; }
-  .morph-slider-indicators { bottom: 14px; }
+  .gallery-stage { --card-w: clamp(190px, 58vw, 250px); }
+  .gallery-arrow { width: 42px; height: 42px; }
 
   .projects-grid {
     grid-template-columns: 1fr;
