@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Private assets (jangan di-commit / jangan ikut ter-clone)
+public/photo/indah2.png
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
