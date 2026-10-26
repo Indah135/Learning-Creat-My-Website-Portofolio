@@ -5,8 +5,8 @@ import { PROJECTS } from '../data/projects';
 
 const CARD_W = 720;
 const CARD_H = 1280;
-const BITMAP_W = 540;
-const BITMAP_H = 960;
+const BITMAP_W = 720;
+const BITMAP_H = 1280;
 const FONT_UI = '-apple-system, "Segoe UI", system-ui, sans-serif';
 const FONT_EMOJI = '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif';
 const AUTOPLAY_DELAY = 4000;
@@ -224,27 +224,17 @@ function ArrowRight() {
 }
 
 function ProjectCard({ project, index }) {
-  function onMouseMove(e) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width  - 0.5;
-    const y = (e.clientY - rect.top)  / rect.height - 0.5;
-    e.currentTarget.style.transform = `translateY(-8px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
-  }
-  function onMouseLeave(e) {
-    e.currentTarget.style.transform = '';
-    e.currentTarget.style.transition = 'transform 0.5s ease';
-    setTimeout(() => { e.currentTarget.style.transition = ''; }, 500);
-  }
-
   return (
     <div
       className="project-card"
       style={{ '--i': index }}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
     >
       <div className="project-thumb" style={{ '--c1': project.c1, '--c2': project.c2 }}>
-        {project.emoji}
+        {project.images && project.images[0] ? (
+          <img src={project.images[0]} alt={project.title} className="project-thumb-img" />
+        ) : (
+          project.emoji
+        )}
       </div>
       <div className="project-body">
         <h3>{project.title}</h3>
@@ -252,7 +242,7 @@ function ProjectCard({ project, index }) {
         <div className="project-tags">
           {project.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
         </div>
-        <a href="#" className="project-link">Lihat Detail →</a>
+        <a href="#" className="project-link">View Details →</a>
       </div>
     </div>
   );
@@ -341,13 +331,13 @@ export default function Projects() {
       ref={ref}
       className={`reveal${visible ? ' visible' : ''}`}
     >
-      <h2 className="section-title centered"><WordReveal>Proyek</WordReveal></h2>
+      <h2 className="section-title centered"><WordReveal>Featured Projects</WordReveal></h2>
 
       <div
         className="gallery-stage"
         ref={stageRef}
         role="group"
-        aria-label="Galeri proyek"
+        aria-label="Projects Gallery"
         tabIndex={0}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -385,7 +375,7 @@ export default function Projects() {
         })}
       </div>
 
-      <div className="gallery-arrows">
+      <div className="gallery-controls">
         <button
           type="button"
           className="gallery-arrow"
@@ -395,6 +385,21 @@ export default function Projects() {
         >
           <ArrowLeft />
         </button>
+
+        <button
+          type="button"
+          className="gallery-view-all-btn"
+          onClick={() => {
+            document.getElementById('all-projects-grid')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <span>View All</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <polyline points="19 12 12 19 5 12" />
+          </svg>
+        </button>
+
         <button
           type="button"
           className="gallery-arrow"
@@ -406,7 +411,7 @@ export default function Projects() {
         </button>
       </div>
 
-      <div className="projects-grid stagger">
+      <div id="all-projects-grid" className="projects-grid stagger">
         {PROJECTS.map((p, i) => (
           <ProjectCard key={p.title} project={p} index={i} />
         ))}
