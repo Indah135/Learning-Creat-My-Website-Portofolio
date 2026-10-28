@@ -2,7 +2,6 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 import { PROJECTS as DEFAULT_PROJECTS } from '../data/projects';
 
 const STORAGE_KEY = 'INDAH_PORTFOLIO_DATA_V1';
-const AUTH_KEY = 'INDAH_PORTFOLIO_AUTH_V1';
 const API_URL_KEY = 'INDAH_PORTFOLIO_API_URL_V1';
 
 export const DEFAULT_API_URL = 'http://localhost/api';
@@ -351,23 +350,4 @@ export function usePortfolio() {
   return context;
 }
 
-export const getAdminAuth = () => {
-  try {
-    const saved = localStorage.getItem(AUTH_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch (err) {
-    console.warn('Failed to parse auth from storage:', err);
-  }
-  return {
-    username: 'admin',
-    password: 'admin123',
-  };
-};
 
-export const saveAdminAuth = (auth) => {
-  try {
-    localStorage.setItem(AUTH_KEY, JSON.stringify(auth));
-  } catch (err) {
-    console.error('Failed to save auth to storage:', err);
-  }
-};

@@ -1,4 +1,6 @@
-# Logs
+# ============================================================
+# LOGS — File log otomatis dari berbagai tools
+# ============================================================
 logs
 *.log
 npm-debug.log*
@@ -7,32 +9,67 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# ============================================================
+# DEPENDENSI & BUILD — Tidak perlu di-commit
+# ============================================================
 node_modules
 dist
 dist-ssr
 *.local
 
-# Private assets (jangan di-commit / jangan ikut ter-clone)
-public/photo/indah2.png
+# ============================================================
+# ENVIRONMENT VARIABLES — Berisi kredensial rahasia
+# Buat file .env.example (tanpa nilai asli) sebagai panduan
+# ============================================================
+.env
+.env.*
+!.env.example
 
-# Database & Sensitive Credentials (jangan di-commit / dipush ke GitHub)
-koneksi.php
-hash.php
+# ============================================================
+# BACKEND PHP — Seluruh folder API & database
+# Mengandung: koneksi database, query SQL, logika server
+# ============================================================
 api/
 database/
 *.sql
 
-# Private Admin Area (area khusus pemilik, jangan di-commit ke publik)
+# File PHP sensitif di root (sudah dihapus, tapi tetap dijaga)
+koneksi.php
+hash.php
+
+# ============================================================
+# FOTO & ASET PRIBADI — Jangan ikut tampil di GitHub publik
+# ============================================================
+public/photo/
+public/cv.pdf
+public/*.pdf
+
+# ============================================================
+# AREA ADMIN REACT — Halaman khusus pemilik
+# Mengandung: form login, dashboard pengelolaan data
+# ============================================================
 src/admin/
 
-# Editor directories and files
+# ============================================================
+# FILE KEAMANAN & SERTIFIKAT — Kunci enkripsi & SSL
+# ============================================================
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+
+# ============================================================
+# EDITOR & SISTEM OPERASI — File konfigurasi lokal
+# ============================================================
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
