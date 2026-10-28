@@ -1949,94 +1949,6 @@ body.light .gallery-view-all-btn:hover {
 }
 .project-link:hover { gap: var(--sp-2); color: var(--accent3); }
 
-
-
-/* ═══════════════════════════════════════════════════════
-   EXPERIENCE — TIMELINE
-═══════════════════════════════════════════════════════ */
-.timeline {
-  position: relative;
-  padding-left: var(--sp-8);
-  max-width: var(--max-w-sm);
-  margin: 0 auto;
-}
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 9px; top: 0; bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--accent), var(--accent3), transparent);
-  border-radius: 2px;
-}
-.timeline-item {
-  position: relative;
-  margin-bottom: var(--sp-6);
-}
-.timeline-item:last-child { margin-bottom: 0; }
-.tl-dot {
-  position: absolute;
-  left: calc(-1 * var(--sp-8) + 3px);
-  top: 17px;
-  width: 13px; height: 13px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent3));
-  border: 2.5px solid var(--bg);
-  box-shadow: 0 0 10px var(--glow);
-}
-.tl-card {
-  background: var(--surface);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: var(--sp-5) var(--sp-6);
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.tl-card:hover {
-  border-color: rgba(91, 164, 245, 0.30);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.30);
-}
-.tl-header {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  margin-bottom: var(--sp-1);
-  flex-wrap: wrap;
-}
-.tl-header h3 {
-  font-size: var(--fs-md);
-  font-weight: var(--fw-bold);
-  color: var(--text);
-  line-height: 1.3;
-}
-.tl-badge {
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-bold);
-  padding: 2px var(--sp-3);
-  border-radius: var(--r-full);
-  background: rgba(63, 185, 80, 0.12);
-  color: var(--green);
-  border: 1px solid rgba(63, 185, 80, 0.28);
-  line-height: 1.6;
-  white-space: nowrap;
-}
-.company {
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semi);
-  color: var(--accent2);
-}
-.period {
-  font-size: var(--fs-xs);
-  color: var(--muted);
-  margin: var(--sp-1) 0 var(--sp-3);
-  letter-spacing: 0.2px;
-}
-.tl-card > p {
-  font-size: var(--fs-sm);
-  color: var(--muted);
-  line-height: 1.7;
-}
-
 /* ═══════════════════════════════════════════════════════
    CONTACT — polished two-column layout
 ═══════════════════════════════════════════════════════ */
@@ -2470,8 +2382,6 @@ footer {
     grid-template-columns: 1fr;
     gap: var(--sp-5);
   }
-
-  .timeline { padding-left: var(--sp-6); }
 
   /* ── Contact mobile ── */
   .contact-links { grid-template-columns: 1fr; max-width: 360px; }

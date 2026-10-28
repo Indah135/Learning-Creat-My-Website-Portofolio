@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Navbar({ isLight, onToggleTheme }) {
+  const { profile } = usePortfolio();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -36,8 +38,9 @@ export default function Navbar({ isLight, onToggleTheme }) {
   return (
     <nav id="navbar" ref={navRef} className={scrolled ? 'scrolled' : ''}>
       <a href="#hero" className="nav-brand">
-        INDAH AMIATI
+        {(profile?.name || 'INDAH AMIATI').toUpperCase()}
       </a>
+
 
       <div className="nav-right">
         <ul className={`nav-links${menuOpen ? ' open' : ''}`}>

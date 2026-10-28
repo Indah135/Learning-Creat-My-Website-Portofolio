@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import WordReveal from './WordReveal';
-import { PROJECTS } from '../data/projects';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const CARD_W = 720;
 const CARD_H = 1280;
@@ -242,7 +242,14 @@ function ProjectCard({ project, index }) {
         <div className="project-tags">
           {project.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
         </div>
-        <a href="#" className="project-link">View Details →</a>
+        <a
+          href={project.link || '#'}
+          target={project.link ? '_blank' : undefined}
+          rel={project.link ? 'noreferrer' : undefined}
+          className="project-link"
+        >
+          View Details →
+        </a>
       </div>
     </div>
   );
@@ -250,6 +257,7 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
   const { ref, visible } = useScrollReveal();
+  const { projects = [] } = usePortfolio();
 
   const stageRef = useRef(null);
   const dragX = useRef(null);
@@ -258,14 +266,17 @@ export default function Projects() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const items = PROJECTS.map((project, pi) => ({ project, pi }));
+  const items = projects.map((project, pi) => ({ project, pi }));
   const total = items.length;
 
   const [reducedMotion] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 
-  const go = dir => setActive(a => (a + dir + total) % total);
+  const go = dir => {
+    if (total === 0) return;
+    setActive(a => (a + dir + total) % total);
+  };
 
   useEffect(() => {
     const root = stageRef.current;
@@ -273,15 +284,16 @@ export default function Projects() {
     root.querySelectorAll('canvas[data-project]').forEach(cv => {
       const pi = Number(cv.dataset.project);
       const s = Number(cv.dataset.screen);
-      if (PROJECTS[pi]) drawPhoneMockup(cv, PROJECTS[pi], s);
+      if (projects[pi]) drawPhoneMockup(cv, projects[pi], s);
     });
-  }, []);
+  }, [projects]);
 
   useEffect(() => {
     if (!visible || paused || reducedMotion || total < 2) return;
     const timer = setInterval(() => setActive(a => (a + 1) % total), AUTOPLAY_DELAY);
     return () => clearInterval(timer);
   }, [visible, paused, reducedMotion, total]);
+
 
   const onPointerDown = e => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -412,10 +424,11 @@ export default function Projects() {
       </div>
 
       <div id="all-projects-grid" className="projects-grid stagger">
-        {PROJECTS.map((p, i) => (
-          <ProjectCard key={p.title} project={p} index={i} />
+        {projects.map((p, i) => (
+          <ProjectCard key={p.id || p.title || i} project={p} index={i} />
         ))}
       </div>
+
     </section>
   );
 }

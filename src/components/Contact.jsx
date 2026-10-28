@@ -1,51 +1,59 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useState } from 'react';
-
-const CONTACT_INFO = [
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2"/>
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-      </svg>
-    ),
-    label: 'Email us',
-    val: 'indahamiati85@gmail.com',
-    href: 'mailto:indahamiati85@gmail.com',
-    color: 'var(--accent2)',
-    glow: 'rgba(42,125,225,0.18)',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.1-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/>
-      </svg>
-    ),
-    label: 'Call us',
-    val: '+62 812-3456-7890',
-    href: 'tel:+6281234567890',
-    color: 'var(--accent3)',
-    glow: 'rgba(249,168,212,0.18)',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </svg>
-    ),
-    label: 'Our location',
-    val: 'Bandung, Jawa Barat, ID',
-    href: 'https://maps.google.com/?q=Bandung',
-    color: 'var(--teal)',
-    glow: 'rgba(56,249,215,0.14)',
-  },
-];
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Contact() {
   const { ref, visible } = useScrollReveal();
+  const { contact } = usePortfolio();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+
+  const emailVal = contact?.email || 'indahamiati85@gmail.com';
+  const phoneVal = contact?.phone || '+62 812-3456-7890';
+  const locVal = contact?.location || 'Bandung, Jawa Barat, ID';
+  const locMap = contact?.locationMapUrl || `https://maps.google.com/?q=${encodeURIComponent(locVal)}`;
+
+  const contactList = [
+    {
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+      ),
+      label: 'Email us',
+      val: emailVal,
+      href: `mailto:${emailVal}`,
+      color: 'var(--accent2)',
+      glow: 'rgba(42,125,225,0.18)',
+    },
+    {
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.1-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/>
+        </svg>
+      ),
+      label: 'Call us',
+      val: phoneVal,
+      href: `tel:${phoneVal.replace(/\s+/g, '')}`,
+      color: 'var(--accent3)',
+      glow: 'rgba(249,168,212,0.18)',
+    },
+    {
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      ),
+      label: 'Our location',
+      val: locVal,
+      href: locMap,
+      color: 'var(--teal)',
+      glow: 'rgba(56,249,215,0.14)',
+    },
+  ];
+
   const [focused, setFocused] = useState('');
 
   const handleChange = (e) => {
@@ -91,7 +99,7 @@ export default function Contact() {
 
           {/* Info cards */}
           <div className="contact-info-list">
-            {CONTACT_INFO.map((item, i) => (
+            {contactList.map((item, i) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -129,13 +137,14 @@ export default function Contact() {
                 <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
               </svg>
             </a>
-            <a href="mailto:indahamiati85@gmail.com" className="contact-social" title="Email">
+            <a href={`mailto:${emailVal}`} className="contact-social" title="Email">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
               </svg>
             </a>
           </div>
+
         </div>
 
         {/* ── RIGHT — Form ── */}

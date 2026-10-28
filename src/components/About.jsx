@@ -1,7 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
-
-const SKILL_TAGS = ['HTML', 'CSS', 'JavaScript', 'MySQL', 'MariaDB', 'VS Code', 'Git & GitHub', 'Word', 'Excel', 'PowerPoint', 'Canva'];
-const INTERESTS = ['Singing', 'Exploring Calm Places', 'Good Food', 'Avocado Juice'];
+import { usePortfolio } from '../context/PortfolioContext';
 
 function CapIcon() {
   return (
@@ -32,6 +30,7 @@ function HeartIcon() {
 
 export default function About() {
   const { ref, visible } = useScrollReveal();
+  const { profile, education, skills, interests } = usePortfolio();
 
   return (
     <section
@@ -48,7 +47,7 @@ export default function About() {
           <h2 className="about-name">
             <span className="about-hi">Hi, I&rsquo;m</span>
             <span className="about-full">
-              Indah Amiati
+              {profile.name || 'Indah Amiati'}
               <svg className="about-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
               </svg>
@@ -56,10 +55,10 @@ export default function About() {
           </h2>
 
           <div className="about-role-row">
-            <p className="about-role">Informatics Student | Frontend Developer</p>
+            <p className="about-role">{profile.role || 'Informatics Student | Frontend Developer'}</p>
             <a
-              href="/cv.pdf"
-              download="CV_Indah_Amiati.pdf"
+              href={profile.cvUrl || '/cv.pdf'}
+              download={profile.cvName || 'CV_Indah_Amiati.pdf'}
               className="about-cv-btn"
               title="Unduh CV"
             >
@@ -73,18 +72,12 @@ export default function About() {
           </div>
 
           <div className="about-bio">
-            <p>
-              Saya adalah mahasiswa Informatika UTDI yang berfokus pada Frontend Development. 
-              Saya tertarik membangun antarmuka web yang responsif, fungsional, dan mudah digunakan
-              dengan desain yang sederhana serta berpusat pada pengguna. Saya senang mempelajari 
-              teknologi baru, mengembangkan keterampilan, dan berkolaborasi dalam tim untuk menciptakan 
-              pengalaman web yang menarik dan bermanfaat.
-            </p>
+            <p>{profile.bio}</p>
           </div>
         </div>
 
         <div className="about-visual">
-          <img src="/photo/properti.png" alt="" />
+          <img src={profile.aboutVisual || '/photo/properti.png'} alt="" />
         </div>
       </div>
 
@@ -96,14 +89,16 @@ export default function About() {
             <h3>Education</h3>
           </div>
           <div className="edu-list">
-            <div className="edu-item">
-              <p className="edu-school">Universitas Teknologi Digital Indonesia (UTDI)</p>
-              <p className="edu-meta">Informatics | 2024 – Present</p>
-            </div>
-            <div className="edu-item">
-              <p className="edu-school">SMA Negeri 3 Buru</p>
-              <p className="edu-meta">Natural Science | 2021 – 2024</p>
-            </div>
+            {education && education.length > 0 ? (
+              education.map((item) => (
+                <div key={item.id || item.school} className="edu-item">
+                  <p className="edu-school">{item.school}</p>
+                  <p className="edu-meta">{item.meta}</p>
+                </div>
+              ))
+            ) : (
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Belum ada data pendidikan.</p>
+            )}
           </div>
         </div>
 
@@ -114,7 +109,7 @@ export default function About() {
             <h3>Skills</h3>
           </div>
           <div className="about-pills">
-            {SKILL_TAGS.map(tag => (
+            {skills && skills.map(tag => (
               <span key={tag} className="about-pill">{tag}</span>
             ))}
           </div>
@@ -127,7 +122,7 @@ export default function About() {
             <h3>Interests</h3>
           </div>
           <div className="interest-list">
-            {INTERESTS.map(item => (
+            {interests && interests.map(item => (
               <span key={item} className="interest-item">
                 <span className="interest-dot" />
                 {item}
@@ -139,3 +134,4 @@ export default function About() {
     </section>
   );
 }
+

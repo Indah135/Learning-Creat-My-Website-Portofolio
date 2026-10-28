@@ -1,5 +1,9 @@
+import { usePortfolio } from '../context/PortfolioContext';
+
 export default function Hero() {
-  const marqueeNames = Array(6).fill('INDAH AMIATI');
+  const { profile } = usePortfolio();
+  const marqueeText = profile.marqueeName || profile.name || 'INDAH AMIATI';
+  const marqueeNames = Array(6).fill(marqueeText.toUpperCase());
 
   return (
     <section id="hero">
@@ -16,8 +20,8 @@ export default function Hero() {
       <div className="hero-photo-wrap">
         <img
           className="hero-photo"
-          src="/photo/indah2.png"
-          alt="Foto Profil"
+          src={profile.photo || '/photo/indah2.png'}
+          alt={profile.name ? `Foto Profil ${profile.name}` : 'Foto Profil'}
         />
       </div>
 
@@ -29,3 +33,4 @@ export default function Hero() {
     </section>
   );
 }
+
