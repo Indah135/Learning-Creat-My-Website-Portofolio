@@ -2,14 +2,17 @@
 
 # 💫 [Indah Amiati](https://github.com/Indah135) — Portfolio Website
 
-**Personal portfolio site for a Front-End Developer**
-*built with React 19 + Vite — zero UI libraries, all animations hand-crafted.*
+**Website portfolio pribadi seorang Mahasiswa Informatika & Frontend Developer**  
+*Dibangun dengan React 19 + Vite — tanpa UI library, semua animasi ditulis manual.*
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2024-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![PHP](https://img.shields.io/badge/PHP-Backend_API-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com)
 [![CSS3](https://img.shields.io/badge/CSS3-Custom_Properties-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](#license)
+
 </div>
 
 ---
@@ -21,6 +24,7 @@
 - [Tech Stack](#-tech-stack)
 - [Struktur Proyek](#-struktur-proyek)
 - [Instalasi & Menjalankan](#-instalasi--menjalankan)
+- [Keamanan & File Privat](#-keamanan--file-privat)
 - [Optimasi Performa](#-optimasi-performa)
 - [Roadmap](#-roadmap)
 - [Kontak](#-kontak)
@@ -29,9 +33,13 @@
 
 ## 🌟 Tentang
 
-Website portfolio pribadi milik **Indah Amiati**, seorang **Front-End Developer** yang membangun antarmuka web yang cepat, responsif, dan estetis. Website ini dirancang sebagai etalase karya, keahlian, dan pengalaman profesional — seluruhnya dalam satu halaman (single-page application) yang mulus.
+Website portfolio pribadi milik **Indah Amiati**, seorang **Mahasiswa Informatika UTDI** yang berfokus pada Frontend Development. Website ini dirancang sebagai etalase karya, keahlian, dan pengalaman — seluruhnya dalam satu halaman (Single Page Application) yang mulus.
 
-Yang membuat proyek ini istimewa: **tanpa Tailwind, tanpa Framer Motion, tanpa UI library.** Semua efek visual — splash screen, cursor glow, scroll-reveal, marquee, glassmorphism, hingga animasi tema gelap/terang — ditulis manual dengan CSS murni dan React hooks. Sebuah perjalanan belajar yang serius tentang fondasi front-end.
+Yang membuat proyek ini istimewa:
+- **Tanpa Tailwind, tanpa Framer Motion, tanpa UI library** — semua efek visual ditulis manual
+- **Backend PHP + MySQL** untuk penyimpanan data portofolio yang dinamis
+- **Area Admin pribadi** (tidak disertakan di repositori publik) untuk mengelola seluruh konten website
+- **Middleware autentikasi** yang melindungi area admin dari akses tidak sah
 
 > *"Coding adalah seni menyusun logika yang hidup."*
 
@@ -43,13 +51,13 @@ Yang membuat proyek ini istimewa: **tanpa Tailwind, tanpa Framer Motion, tanpa U
 <tr>
 <td>
 
-**🎬 Splash Screen**
-Intro loading dengan progress bar gradient 2.2 detik dan tombol skip interaktif.
+**🎬 Splash Screen**  
+Intro loading dengan progress bar gradient dan tombol skip interaktif.
 
 </td>
 <td>
 
-**🌗 Dark / Light Theme**
+**🌗 Dark / Light Theme**  
 Toggle tema gelap-terang yang tersimpan otomatis di `localStorage`.
 
 </td>
@@ -57,27 +65,27 @@ Toggle tema gelap-terang yang tersimpan otomatis di `localStorage`.
 <tr>
 <td>
 
-**🖱️ Cursor Glow**
+**🖱️ Cursor Glow**  
 Cahaya radial yang mengikuti kursor, plus blob parallax di mode terang.
 
 </td>
 <td>
 
-**📜 Scroll Reveal**
-Animasi masuk elemen saat di-scroll, memakai IntersectionObserver custom.
+**📜 Scroll Reveal**  
+Animasi masuk elemen saat di-scroll, memakai `IntersectionObserver` custom.
 
 </td>
 </tr>
 <tr>
 <td>
 
-**🔮 Glassmorphism**
+**🔮 Glassmorphism**  
 Navbar & kartu dengan efek kaca `backdrop-filter: blur` modern.
 
 </td>
 <td>
 
-**🧊 3D Tilt Cards**
+**🧊 3D Tilt Cards**  
 Kartu proyek dengan efek miring tiga dimensi saat hover.
 
 </td>
@@ -85,21 +93,35 @@ Kartu proyek dengan efek miring tiga dimensi saat hover.
 <tr>
 <td>
 
-**✍️ Word Reveal**
+**✍️ Word Reveal**  
 Teks muncul kata per kata dengan efek blur-in berurutan.
 
 </td>
 <td>
 
-**📱 Fully Responsive**
+**📱 Fully Responsive**  
 Layout adaptif untuk desktop, tablet, dan mobile (hamburger menu).
+
+</td>
+</tr>
+<tr>
+<td>
+
+**🔒 Admin Area (Privat)**  
+Dashboard pengelolaan konten website dengan autentikasi & middleware guard.
+
+</td>
+<td>
+
+**🗄️ Backend PHP + MySQL**  
+API PHP untuk menyimpan & membaca data portofolio dari database.
 
 </td>
 </tr>
 </table>
 
-**Alur halaman:**
-`Splash` → `Hero` → `About` → `Skills` → `Projects` → `Experience` → `Contact` → `Footer`
+**Alur halaman:**  
+`Splash` → `Hero` → `About` → `Projects` → `Contact` → `Footer`
 
 ---
 
@@ -109,45 +131,68 @@ Layout adaptif untuk desktop, tablet, dan mobile (hamburger menu).
 |---|---|
 | **Framework** | React 19 |
 | **Build Tool** | Vite 8 |
-| **Bahasa** | JavaScript (JSX) — ESM |
+| **Bahasa (Frontend)** | JavaScript (JSX) — ESM |
 | **Styling** | CSS murni dengan CSS Custom Properties |
-| **Linting** | Oxlint + React plugin |
 | **Animasi** | CSS keyframes + React hooks kustom |
-| **Runtime Deps** | Hanya `react` & `react-dom` (sangat ringan!) |
+| **Backend** | PHP (Native) — REST API |
+| **Database** | MySQL / MariaDB via phpMyAdmin |
+| **Linting** | Oxlint + React plugin |
+| **Runtime Deps** | `react`, `react-dom`, `ogl` |
 
 ---
 
 ## 📂 Struktur Proyek
 
+> **Catatan:** Beberapa folder bersifat **privat** dan tidak disertakan di repositori ini demi keamanan (lihat [bagian keamanan](#-keamanan--file-privat)).
+
 ```
 Learning-Creat-My-Website-Portofolio/
 ├── public/
 │   ├── dark-bg.jpg              # Background mode gelap
-│   └── photo/
-│       ├── indah2.png           # Foto hero
-│       └── properti.png         # Ilustrasi section About
+│   └── photo/                   # 🔒 Foto (tidak di-commit)
+│       └── indah2.png
 ├── src/
 │   ├── main.jsx                 # Entry point React
-│   ├── App.jsx                  # Komposisi seluruh section
+│   ├── App.jsx                  # Root komponen + routing hash admin
 │   ├── index.css                # Semua styles + design tokens
+│   ├── data/
+│   │   └── projects.js          # Data proyek default (fallback)
 │   ├── hooks/
 │   │   ├── useTheme.js          # Toggle tema gelap/terang
 │   │   └── useScrollReveal.js   # IntersectionObserver hook
-│   └── components/
-│       ├── Splash.jsx           # Intro loading screen
-│       ├── CursorGlow.jsx       # Efek cahaya kursor
-│       ├── Navbar.jsx           # Navigasi glass + theme toggle
-│       ├── Hero.jsx             # Marquee nama + foto
-│       ├── About.jsx            # Bio + Download CV
-│       ├── Skills.jsx           # 10 kartu keahlian + progress bar
-│       ├── Projects.jsx         # 4 kartu proyek dengan 3D tilt
-│       ├── Experience.jsx       # Timeline pengalaman
-│       ├── Contact.jsx          # Kartu kontak
-│       ├── Footer.jsx           # Footer
-│       └── WordReveal.jsx       # Animasi teks per kata
+│   ├── context/
+│   │   └── PortfolioContext.jsx  # State global + sinkronisasi API
+│   ├── components/
+│   │   ├── Splash.jsx           # Intro loading screen
+│   │   ├── CursorGlow.jsx       # Efek cahaya kursor
+│   │   ├── Navbar.jsx           # Navigasi glass + theme toggle
+│   │   ├── Hero.jsx             # Marquee nama + foto
+│   │   ├── About.jsx            # Bio + skills + minat + CV
+│   │   ├── Projects.jsx         # Kartu proyek dengan 3D tilt
+│   │   ├── Contact.jsx          # Form & info kontak
+│   │   ├── Footer.jsx           # Footer
+│   │   └── WordReveal.jsx       # Animasi teks per kata
+│   └── admin/                   # 🔒 Area admin (tidak di-commit)
+│       ├── AdminPortal.jsx
+│       ├── AdminLogin.jsx
+│       ├── AdminDashboard.jsx
+│       ├── ProtectedRoute.jsx
+│       └── admin.css
+├── api/                         # 🔒 Backend PHP (tidak di-commit)
+│   ├── config.php               # Konfigurasi & koneksi database
+│   ├── login.php                # Autentikasi admin
+│   ├── get_data.php             # Ambil semua data portofolio
+│   ├── save_profile.php         # Simpan data profil
+│   ├── save_contact.php         # Simpan data kontak
+│   ├── projects.php             # CRUD data proyek
+│   ├── skills_edu.php           # Simpan skills & pendidikan
+│   └── messages.php             # Pesan dari form kontak
+├── database/                    # 🔒 File SQL (tidak di-commit)
+│   └── portfolio_db.sql
 ├── index.html
 ├── vite.config.js
-└── package.json
+├── package.json
+└── .gitignore
 ```
 
 ---
@@ -155,6 +200,8 @@ Learning-Creat-My-Website-Portofolio/
 ## 🚀 Instalasi & Menjalankan
 
 **Prasyarat:** [Node.js](https://nodejs.org) (v18+) dan npm.
+
+### Frontend (React)
 
 **1. Clone repository**
 
@@ -177,6 +224,16 @@ npm run dev
 
 Website akan tersedia di `http://localhost:5173` dengan hot module replacement aktif.
 
+### Backend PHP (Opsional — untuk fitur database)
+
+> Backend PHP bersifat privat dan tidak disertakan di repositori ini. Jika kamu adalah pemilik proyek, ikuti langkah berikut:
+
+1. Pastikan **XAMPP / Laragon** sudah berjalan (Apache + MySQL aktif)
+2. Letakkan folder `api/` di direktori server (`htdocs/` atau `www/`)
+3. Import file `database/portfolio_db.sql` ke **phpMyAdmin**
+4. Sesuaikan kredensial di `api/config.php`
+5. Akses area admin melalui `http://localhost:5173/#admin`
+
 ### 📜 Perintah Lengkap
 
 | Perintah | Deskripsi |
@@ -188,26 +245,49 @@ Website akan tersedia di `http://localhost:5173` dengan hot module replacement a
 
 ---
 
+## 🔒 Keamanan & File Privat
+
+Repositori ini bersifat **publik** namun beberapa bagian sensitif **sengaja tidak disertakan** demi keamanan:
+
+| File / Folder | Alasan Tidak Di-commit |
+|---|---|
+| `api/` | Berisi logika server, koneksi database, dan query SQL |
+| `src/admin/` | Area admin khusus pemilik (login, dashboard) |
+| `database/*.sql` | Schema dan data database |
+| `public/photo/indah2.png` | Foto profil pribadi |
+| `public/photo/properti.png` | Ilustrasi section About (pribadi) |
+| `public/*.pdf` | File CV pribadi |
+| `.env` | Environment variable (jika ada) |
+
+Semua file tersebut sudah terdaftar di `.gitignore` dan **tidak akan ikut ter-clone** oleh siapapun.
+
+---
+
 ## 📊 Optimasi Performa
 
-Pendekatan yang dipakai agar website tetap ringan dan cepat:
-
-- ⚡ **Runtime dependencies minimal** — hanya `react` dan `react-dom`
+- ⚡ **Runtime dependencies minimal** — hanya `react`, `react-dom`, dan `ogl`
 - 🚫 **Tanpa UI/animation library** — semua efek ditulis dengan CSS murni
-- 🖼️ **Aset gambar** — kompresi foto agar tidak membebani loading
+- 📦 **Lazy loading** — komponen AdminPortal dimuat hanya saat dibutuhkan
 - 🔁 **IntersectionObserver** — animasi dijalankan hanya saat elemen terlihat
-- 💾 **Tema persisten** — preferensi pengguna disimpan di `localStorage`
+- 💾 **Data persisten** — konten tersimpan di `localStorage` sebagai fallback offline
+- 🗄️ **Sinkronisasi database** — data otomatis diambil dari MySQL jika server tersedia
 
 ---
 
 ## 🗺️ Roadmap
 
-- [ ] Mengecek seluruh tautan placeholder (Email, GitHub, LinkedIn, CV)
-- [ ] Deploy ke GitHub Pages / Vercel / Netlify
-- [ ] Menambahkan section **Blog**
-- [ ] Menambahkan **filter** pada section Projects
-- [ ] Optimasi SEO (meta tags, Open Graph, sitemap)
-- [ ] Menambahkan **dark mode system preference** (`prefers-color-scheme`)
+- [x] Splash screen dengan progress bar
+- [x] Dark / light theme toggle
+- [x] Cursor glow & parallax blob
+- [x] Scroll reveal animasi
+- [x] Kartu proyek 3D tilt
+- [x] Area admin dengan autentikasi & middleware guard
+- [x] Backend PHP + MySQL untuk data dinamis
+- [x] Proteksi file privat via `.gitignore`
+- [ ] Deploy ke Vercel / Netlify
+- [ ] Optimasi SEO (meta tags, Open Graph)
+- [ ] Filter kategori pada section Projects
+- [ ] Dukungan `prefers-color-scheme` (sistem OS)
 - [ ] Migrasi bertahap ke TypeScript
 
 ---

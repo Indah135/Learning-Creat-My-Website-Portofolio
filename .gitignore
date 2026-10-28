@@ -39,8 +39,11 @@ hash.php
 
 # ============================================================
 # FOTO & ASET PRIBADI — Jangan ikut tampil di GitHub publik
+# Foto proyek (project-*.jpg, workspace-mockup.png) boleh publik
+# Hanya foto diri & ilustrasi pribadi yang dilindungi
 # ============================================================
-public/photo/
+public/photo/indah2.png
+public/photo/properti.png
 public/cv.pdf
 public/*.pdf
 
