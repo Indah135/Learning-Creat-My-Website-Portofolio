@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import './index.css';
 
 import { PortfolioProvider } from './context/PortfolioContext';
@@ -11,9 +11,28 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AdminPortal from './admin/AdminPortal';
 
-function PortfolioMain({ isLight, onToggleTheme, onOpenAdmin }) {
+const AdminPortal = lazy(() =>
+  import('./admin/AdminPortal').catch(() => ({
+    default: ({ onBackToWebsite }) => (
+      <div style={{ minHeight: '100vh', background: '#0b0f19', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24, textAlign: 'center', fontFamily: 'sans-serif' }}>
+        <h2 style={{ fontSize: '1.5rem', marginBottom: 12 }}>🔒 Admin Area</h2>
+        <p style={{ color: '#9ca3af', maxWidth: 450, marginBottom: 24 }}>
+          Area admin bersifat privat dan tidak disertakan pada repositori publik ini.
+        </p>
+        <button
+          onClick={onBackToWebsite}
+          style={{ background: '#ec4899', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}
+        >
+          &larr; Kembali ke Website Utama
+        </button>
+      </div>
+    ),
+  }))
+);
+
+
+function PortfolioMain({ isLight, onToggleTheme }) {
   const [splashDone, setSplashDone] = useState(false);
 
   return (
@@ -31,10 +50,11 @@ function PortfolioMain({ isLight, onToggleTheme, onOpenAdmin }) {
         <Contact />
       </main>
 
-      <Footer onOpenAdmin={onOpenAdmin} />
+      <Footer />
     </>
   );
 }
+
 
 export default function App() {
   const { isLight, toggle } = useTheme();
@@ -82,14 +102,17 @@ export default function App() {
   return (
     <PortfolioProvider>
       {isAdminView ? (
-        <AdminPortal onBackToWebsite={navigateToWebsite} />
+        <Suspense fallback={<div style={{ minHeight: '100vh', background: '#0b0f19' }} />}>
+          <AdminPortal onBackToWebsite={navigateToWebsite} />
+        </Suspense>
       ) : (
         <PortfolioMain
           isLight={isLight}
           onToggleTheme={toggle}
-          onOpenAdmin={navigateToAdmin}
         />
       )}
+
+
     </PortfolioProvider>
   );
 }

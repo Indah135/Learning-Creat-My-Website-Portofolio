@@ -15,6 +15,16 @@ dist-ssr
 # Private assets (jangan di-commit / jangan ikut ter-clone)
 public/photo/indah2.png
 
+# Database & Sensitive Credentials (jangan di-commit / dipush ke GitHub)
+koneksi.php
+hash.php
+api/
+database/
+*.sql
+
+# Private Admin Area (area khusus pemilik, jangan di-commit ke publik)
+src/admin/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -25,3 +35,4 @@ public/photo/indah2.png
 *.njsproj
 *.sln
 *.sw?
+

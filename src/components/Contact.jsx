@@ -4,9 +4,7 @@ import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Contact() {
   const { ref, visible } = useScrollReveal();
-  const { contact } = usePortfolio();
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const { contact, apiUrl } = usePortfolio();
 
   const emailVal = contact?.email || 'indahamiati85@gmail.com';
   const phoneVal = contact?.phone || '+62 812-3456-7890';
@@ -54,18 +52,34 @@ export default function Contact() {
     },
   ];
 
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
   const [focused, setFocused] = useState('');
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+
+    try {
+      if (apiUrl) {
+        await fetch(`${apiUrl.replace(/\/$/, '')}/messages.php`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+      }
+    } catch (err) {
+      console.warn('Message saved locally / offline:', err);
+    }
+
+    setTimeout(() => setSubmitted(false), 3500);
     setFormData({ name: '', email: '', message: '' });
   };
+
 
   return (
     <section

@@ -1,8 +1,11 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { PROJECTS as DEFAULT_PROJECTS } from '../data/projects';
 
 const STORAGE_KEY = 'INDAH_PORTFOLIO_DATA_V1';
 const AUTH_KEY = 'INDAH_PORTFOLIO_AUTH_V1';
+const API_URL_KEY = 'INDAH_PORTFOLIO_API_URL_V1';
+
+export const DEFAULT_API_URL = 'http://localhost/api';
 
 export const INITIAL_PORTFOLIO_DATA = {
   profile: {
@@ -56,6 +59,12 @@ export const INITIAL_PORTFOLIO_DATA = {
 const PortfolioContext = createContext(null);
 
 export function PortfolioProvider({ children }) {
+  const [apiUrl, setApiUrlState] = useState(() => {
+    return localStorage.getItem(API_URL_KEY) || DEFAULT_API_URL;
+  });
+
+  const [dbConnected, setDbConnected] = useState(false);
+
   const [data, setData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -87,38 +96,91 @@ export function PortfolioProvider({ children }) {
     }
   }, [data]);
 
-  const updateProfile = (newProfileFields) => {
+  // Fetch initial data from PHP MySQL backend if available
+  const fetchFromDatabase = useCallback(async (customUrl) => {
+    const base = (customUrl || apiUrl).replace(/\/$/, '');
+    try {
+      const res = await fetch(`${base}/get_data.php`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+      });
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      const json = await res.json();
+      if (json.status === 'success' && json.data) {
+        setDbConnected(true);
+        setData((prev) => ({
+          ...prev,
+          profile: { ...prev.profile, ...(json.data.profile || {}) },
+          education: json.data.education?.length ? json.data.education : prev.education,
+          skills: json.data.skills?.length ? json.data.skills : prev.skills,
+          interests: json.data.interests?.length ? json.data.interests : prev.interests,
+          projects: json.data.projects?.length ? json.data.projects : prev.projects,
+          contact: { ...prev.contact, ...(json.data.contact || {}) },
+        }));
+        return true;
+      }
+    } catch {
+      // Graceful offline fallback
+      setDbConnected(false);
+      return false;
+    }
+  }, [apiUrl]);
+
+  useEffect(() => {
+    fetchFromDatabase();
+  }, [fetchFromDatabase]);
+
+  const setApiUrl = (newUrl) => {
+    const clean = newUrl.trim();
+    localStorage.setItem(API_URL_KEY, clean);
+    setApiUrlState(clean);
+    fetchFromDatabase(clean);
+  };
+
+  const updateProfile = async (newProfileFields) => {
     setData((prev) => ({
       ...prev,
       profile: { ...prev.profile, ...newProfileFields },
     }));
+
+    // Sync to MySQL API
+    try {
+      await fetch(`${apiUrl.replace(/\/$/, '')}/save_profile.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newProfileFields),
+      });
+    } catch (err) {
+      console.warn('API sync failed, saved locally:', err);
+    }
   };
 
-  const updateEducation = (educationList) => {
+  const updateEducation = async (educationList) => {
     setData((prev) => ({
       ...prev,
       education: educationList,
     }));
   };
 
-  const updateSkills = (skillsList) => {
+  const updateSkills = async (skillsList) => {
     setData((prev) => ({
       ...prev,
       skills: skillsList,
     }));
   };
 
-  const updateInterests = (interestsList) => {
+  const updateInterests = async (interestsList) => {
     setData((prev) => ({
       ...prev,
       interests: interestsList,
     }));
   };
 
-  const addProject = (project) => {
+  const addProject = async (project) => {
+    const tempId = project.id || `proj-${Date.now()}`;
     const newProject = {
       ...project,
-      id: project.id || `proj-${Date.now()}`,
+      id: tempId,
       tags: Array.isArray(project.tags)
         ? project.tags
         : typeof project.tags === 'string'
@@ -126,53 +188,108 @@ export function PortfolioProvider({ children }) {
         : [],
       images: Array.isArray(project.images) ? project.images : project.images ? [project.images] : [],
     };
+
     setData((prev) => ({
       ...prev,
       projects: [newProject, ...prev.projects],
     }));
+
+    // Sync to MySQL API
+    try {
+      const res = await fetch(`${apiUrl.replace(/\/$/, '')}/projects.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newProject),
+      });
+      const resData = await res.json();
+      if (resData.status === 'success' && resData.id) {
+        setData((prev) => ({
+          ...prev,
+          projects: prev.projects.map((p) =>
+            p.id === tempId ? { ...p, id: resData.id, db_id: resData.db_id } : p
+          ),
+        }));
+      }
+    } catch (err) {
+      console.warn('API sync failed, saved locally:', err);
+    }
   };
 
-  const updateProject = (projectId, updatedFields) => {
+  const updateProject = async (projectId, updatedFields) => {
+    const formattedTags = Array.isArray(updatedFields.tags)
+      ? updatedFields.tags
+      : typeof updatedFields.tags === 'string'
+      ? updatedFields.tags.split(',').map((t) => t.trim()).filter(Boolean)
+      : undefined;
+
+    const formattedImages = Array.isArray(updatedFields.images)
+      ? updatedFields.images
+      : updatedFields.images
+      ? [updatedFields.images]
+      : undefined;
+
+    const mergedFields = {
+      ...updatedFields,
+      ...(formattedTags ? { tags: formattedTags } : {}),
+      ...(formattedImages ? { images: formattedImages } : {}),
+    };
+
     setData((prev) => ({
       ...prev,
       projects: prev.projects.map((p) => {
         if (p.id === projectId || p.title === projectId) {
-          const formattedTags = Array.isArray(updatedFields.tags)
-            ? updatedFields.tags
-            : typeof updatedFields.tags === 'string'
-            ? updatedFields.tags.split(',').map((t) => t.trim()).filter(Boolean)
-            : p.tags;
-
-          const formattedImages = Array.isArray(updatedFields.images)
-            ? updatedFields.images
-            : updatedFields.images
-            ? [updatedFields.images]
-            : p.images;
-
-          return {
-            ...p,
-            ...updatedFields,
-            tags: formattedTags,
-            images: formattedImages,
-          };
+          return { ...p, ...mergedFields };
         }
         return p;
       }),
     }));
+
+    // Sync to MySQL API
+    try {
+      await fetch(`${apiUrl.replace(/\/$/, '')}/projects.php`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...mergedFields, id: projectId }),
+      });
+    } catch (err) {
+      console.warn('API sync failed, saved locally:', err);
+    }
   };
 
-  const deleteProject = (projectId) => {
+  const deleteProject = async (projectId) => {
     setData((prev) => ({
       ...prev,
       projects: prev.projects.filter((p) => p.id !== projectId && p.title !== projectId),
     }));
+
+    // Sync to MySQL API
+    try {
+      await fetch(`${apiUrl.replace(/\/$/, '')}/projects.php?id=${encodeURIComponent(projectId)}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: projectId }),
+      });
+    } catch (err) {
+      console.warn('API sync failed, deleted locally:', err);
+    }
   };
 
-  const updateContact = (newContactFields) => {
+  const updateContact = async (newContactFields) => {
     setData((prev) => ({
       ...prev,
       contact: { ...prev.contact, ...newContactFields },
     }));
+
+    // Sync to MySQL API
+    try {
+      await fetch(`${apiUrl.replace(/\/$/, '')}/save_contact.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newContactFields),
+      });
+    } catch (err) {
+      console.warn('API sync failed, saved locally:', err);
+    }
   };
 
   const resetToDefaults = () => {
@@ -205,6 +322,10 @@ export function PortfolioProvider({ children }) {
         interests: data.interests,
         projects: data.projects,
         contact: data.contact,
+        apiUrl,
+        setApiUrl,
+        dbConnected,
+        fetchFromDatabase,
         updateProfile,
         updateEducation,
         updateSkills,
