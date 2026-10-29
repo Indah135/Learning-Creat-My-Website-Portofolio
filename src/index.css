@@ -2428,3 +2428,34 @@ footer {
 @media (max-width: 400px) {
   .hero-name { letter-spacing: -0.5px; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   IMAGE PROTECTION & SHIELD OVERLAY
+═══════════════════════════════════════════════════════ */
+.protected-photo,
+.protected-photo img {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-drag: none !important;
+  pointer-events: none !important;
+}
+
+.protected-photo-wrap {
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.protected-photo-shield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: transparent;
+  cursor: default;
+}

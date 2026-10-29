@@ -76,8 +76,22 @@ export default function About() {
           </div>
         </div>
 
-        <div className="about-visual">
-          <img src={profile.aboutVisual || '/photo/properti.png'} alt="" />
+        <div
+          className="about-visual protected-photo-wrap"
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          <img
+            src={profile.aboutVisual || '/photo/properti.png'}
+            alt=""
+            className="protected-photo"
+            draggable="false"
+            onContextMenu={(e) => e.preventDefault()}
+          />
+          <div
+            className="protected-photo-shield"
+            onContextMenu={(e) => e.preventDefault()}
+            aria-hidden="true"
+          />
         </div>
       </div>
 

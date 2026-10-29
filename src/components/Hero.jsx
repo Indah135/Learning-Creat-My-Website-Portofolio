@@ -16,12 +16,22 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Center photo */}
-      <div className="hero-photo-wrap">
+      {/* Center photo with protective shield */}
+      <div
+        className="hero-photo-wrap protected-photo-wrap"
+        onContextMenu={(e) => e.preventDefault()}
+      >
         <img
-          className="hero-photo"
+          className="hero-photo protected-photo"
           src={profile.photo || '/photo/indah2.png'}
           alt={profile.name ? `Foto Profil ${profile.name}` : 'Foto Profil'}
+          draggable="false"
+          onContextMenu={(e) => e.preventDefault()}
+        />
+        <div
+          className="protected-photo-shield"
+          onContextMenu={(e) => e.preventDefault()}
+          aria-hidden="true"
         />
       </div>
 
