@@ -13,7 +13,11 @@ export const resolveAsset = (path) => {
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
     return path;
   }
-  const clean = path.startsWith('/') ? path : `/${path}`;
+  // Hapus prefix ganda jika sudah mengandung BASE_PATH
+  let clean = path.startsWith('/') ? path : `/${path}`;
+  if (BASE_PATH && clean.startsWith(`${BASE_PATH}/`)) {
+    return clean;
+  }
   return `${BASE_PATH}${clean}`;
 };
 
