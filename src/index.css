@@ -364,7 +364,7 @@ body {
   font-size: var(--fs-base);
   line-height: var(--lh);
   background-color: #030814;
-  background-image: url('/dark-bg.jpg');
+  background-image: url('../dark-bg.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -1564,7 +1564,7 @@ section + section::before {
   right: 0;
   top: 100%;
   height: 32%;
-  background: url('/photo/properti.png') left bottom / 100% auto no-repeat;
+  background: url('../photo/properti.png') left bottom / 100% auto no-repeat;
   transform: scaleY(-1);
   -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 72%);
   mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 72%);

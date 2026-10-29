@@ -6,15 +6,26 @@ const API_URL_KEY = 'INDAH_PORTFOLIO_API_URL_V1';
 
 export const DEFAULT_API_URL = 'http://localhost/api';
 
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+export const resolveAsset = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
+    return path;
+  }
+  const clean = path.startsWith('/') ? path : `/${path}`;
+  return `${BASE_PATH}${clean}`;
+};
+
 export const INITIAL_PORTFOLIO_DATA = {
   profile: {
     name: 'Indah Amiati',
     marqueeName: 'INDAH AMIATI',
     role: 'Informatics Student | Frontend Developer',
     bio: 'Saya adalah mahasiswa Informatika UTDI yang berfokus pada Frontend Development. Saya tertarik membangun antarmuka web yang responsif, fungsional, dan mudah digunakan dengan desain yang sederhana serta berpusat pada pengguna. Saya senang mempelajari teknologi baru, mengembangkan keterampilan, dan berkolaborasi dalam tim untuk menciptakan pengalaman web yang menarik dan bermanfaat.',
-    photo: '/photo/indah2.png',
-    aboutVisual: '/photo/properti.png',
-    cvUrl: '/cv.pdf',
+    photo: resolveAsset('/photo/indah2.png'),
+    aboutVisual: resolveAsset('/photo/properti.png'),
+    cvUrl: resolveAsset('/cv.pdf'),
     cvName: 'CV_Indah_Amiati.pdf',
   },
   education: [
@@ -46,6 +57,7 @@ export const INITIAL_PORTFOLIO_DATA = {
   projects: DEFAULT_PROJECTS.map((proj, idx) => ({
     ...proj,
     id: proj.id || `proj-${idx + 1}`,
+    images: (proj.images || []).map(img => resolveAsset(img)),
   })),
   contact: {
     email: 'indahamiati85@gmail.com',
@@ -69,12 +81,22 @@ export function PortfolioProvider({ children }) {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
+        const savedProfile = parsed.profile || {};
         return {
           ...INITIAL_PORTFOLIO_DATA,
           ...parsed,
-          profile: { ...INITIAL_PORTFOLIO_DATA.profile, ...(parsed.profile || {}) },
+          profile: {
+            ...INITIAL_PORTFOLIO_DATA.profile,
+            ...savedProfile,
+            photo: resolveAsset(savedProfile.photo || '/photo/indah2.png'),
+            aboutVisual: resolveAsset(savedProfile.aboutVisual || '/photo/properti.png'),
+            cvUrl: resolveAsset(savedProfile.cvUrl || '/cv.pdf'),
+          },
           contact: { ...INITIAL_PORTFOLIO_DATA.contact, ...(parsed.contact || {}) },
-          projects: parsed.projects?.length ? parsed.projects : INITIAL_PORTFOLIO_DATA.projects,
+          projects: (parsed.projects?.length ? parsed.projects : INITIAL_PORTFOLIO_DATA.projects).map(p => ({
+            ...p,
+            images: (p.images || []).map(img => resolveAsset(img)),
+          })),
           skills: parsed.skills?.length ? parsed.skills : INITIAL_PORTFOLIO_DATA.skills,
           interests: parsed.interests?.length ? parsed.interests : INITIAL_PORTFOLIO_DATA.interests,
           education: parsed.education?.length ? parsed.education : INITIAL_PORTFOLIO_DATA.education,

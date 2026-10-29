@@ -1,5 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { usePortfolio } from '../context/PortfolioContext';
+import { usePortfolio, resolveAsset } from '../context/PortfolioContext';
 
 function CapIcon() {
   return (
@@ -81,7 +81,7 @@ export default function About() {
           onContextMenu={(e) => e.preventDefault()}
         >
           <img
-            src={profile.aboutVisual || '/photo/properti.png'}
+            src={resolveAsset(profile.aboutVisual || '/photo/properti.png')}
             alt=""
             className="protected-photo"
             draggable="false"

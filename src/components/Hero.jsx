@@ -1,4 +1,4 @@
-import { usePortfolio } from '../context/PortfolioContext';
+import { usePortfolio, resolveAsset } from '../context/PortfolioContext';
 
 export default function Hero() {
   const { profile } = usePortfolio();
@@ -23,7 +23,7 @@ export default function Hero() {
       >
         <img
           className="hero-photo protected-photo"
-          src={profile.photo || '/photo/indah2.png'}
+          src={resolveAsset(profile.photo || '/photo/indah2.png')}
           alt={profile.name ? `Foto Profil ${profile.name}` : 'Foto Profil'}
           draggable="false"
           onContextMenu={(e) => e.preventDefault()}
