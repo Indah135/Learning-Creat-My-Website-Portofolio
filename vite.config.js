@@ -6,4 +6,7 @@ export default defineConfig({
   plugins: [react()],
   // Wajib diisi nama repository agar aset (JS/CSS/gambar) tampil benar di GitHub Pages
   base: '/Learning-Creat-My-Website-Portofolio/',
+  build: {
+    outDir: 'docs',
+  },
 })

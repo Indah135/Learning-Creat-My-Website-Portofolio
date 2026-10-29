@@ -44,8 +44,12 @@ hash.php
 # ============================================================
 public/photo/indah2.png
 public/photo/properti.png
+docs/photo/indah2.png
+docs/photo/properti.png
 public/cv.pdf
 public/*.pdf
+docs/cv.pdf
+docs/*.pdf
 
 # ============================================================
 # AREA ADMIN REACT — Halaman khusus pemilik
