@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import WordReveal from './WordReveal';
-import { usePortfolio } from '../context/PortfolioContext';
+import { usePortfolio, resolveAsset } from '../context/PortfolioContext';
 
 const CARD_W = 720;
 const CARD_H = 1280;
@@ -231,7 +231,7 @@ function ProjectCard({ project, index }) {
     >
       <div className="project-thumb" style={{ '--c1': project.c1, '--c2': project.c2 }}>
         {project.images && project.images[0] ? (
-          <img src={project.images[0]} alt={project.title} className="project-thumb-img" />
+          <img src={resolveAsset(project.images[0])} alt={project.title} className="project-thumb-img" />
         ) : (
           project.emoji
         )}
@@ -371,7 +371,7 @@ export default function Projects() {
               }}
             >
               {project.images && project.images[0] ? (
-                <img src={project.images[0]} alt={project.title} />
+                <img src={resolveAsset(project.images[0])} alt={project.title} />
               ) : (
                 <canvas
                   width={BITMAP_W}

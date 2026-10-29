@@ -16,9 +16,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Center photo with protective shield */}
+      {/* Center photo */}
       <div
-        className="hero-photo-wrap protected-photo-wrap"
+        className="hero-photo-wrap"
         onContextMenu={(e) => e.preventDefault()}
       >
         <img
