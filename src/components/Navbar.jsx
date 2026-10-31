@@ -37,11 +37,6 @@ export default function Navbar({ isLight, onToggleTheme }) {
 
   return (
     <nav id="navbar" ref={navRef} className={scrolled ? 'scrolled' : ''}>
-      <a href="#hero" className="nav-brand">
-        {(profile?.name || 'INDAH AMIATI').toUpperCase()}
-      </a>
-
-
       <div className="nav-right">
         <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
           {links.map(({ href, label }) => (

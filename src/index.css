@@ -10,7 +10,7 @@
   --border:    rgba(56, 110, 200, 0.28);
   --accent:    #2a7de1;
   --accent2:   #4a8fe7;
-  --accent3:   #f9a8d4;
+  --accent3:   #38bdf8;
   --teal:      #38f9d7;
   --green:     #3fb950;
   --text:      #e6edf3;
@@ -63,26 +63,26 @@
    LIGHT MODE OVERRIDES
 ═══════════════════════════════════════════════════════ */
 body.light {
-  --bg:        #f5f6ff;
-  --bg2:       #eaecff;
+  --bg:        #ffffff;
+  --bg2:       #eef2f9;
   --surface:   #ffffff;
-  --surface2:  #f0f2fc;
-  --border:    #d0d6f0;
-  --accent:    #2a7de1;
+  --surface2:  #f4f7fc;
+  --border:    #d0d9ea;
+  --accent:    #2f6bb8;
   --accent2:   #1a64c8;
-  --accent3:   #ec4899;
-  --teal:      #0ea5a0;
-  --green:     #16a34a;
+  --accent3:   #3b5b9c;
+  --teal:      #5b7fb5;
+  --green:     #305282;
   --text:      #0f172a;
   --muted:     #35455e;
-  --glow:      rgba(42, 125, 225, 0.22);
-  --nav-active: #eaeef4;
+  --glow:      rgba(48, 82, 130, 0.20);
+  --nav-active: #eef2f9;
 }
 
-/* Monsoon Glow — gradient 45° #305282 → #98AFC7 → #E9ECEF */
+/* White & Soft Navy — putih dominan dengan biru tua soft di sudut */
 body.light {
-  background-color: #e9ecef;
-  background-image: linear-gradient(45deg, #e9ecef 0%, #98afc7 50%, #305282 100%);
+  background-color: #ffffff;
+  background-image: linear-gradient(45deg, #ffffff 0%, #e4ebf6 55%, #305282 100%);
   background-attachment: fixed;
   background-size: cover;
   background-position: center center;
@@ -115,17 +115,17 @@ body.light .lm-blobs { display: none; } /* dimatikan — bg memakai gradient Mon
   top: -180px; left: -180px;
   animation: lmFloat1 14s ease-in-out infinite alternate;
 }
-/* Pink — kanan tengah */
+/* Sky Blue — kanan tengah */
 .lm-blob-2 {
   width: 540px; height: 540px;
-  background: radial-gradient(circle, rgba(249, 168, 212, 0.45) 0%, rgba(244, 114, 182, 0.25) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.40) 0%, rgba(14, 165, 233, 0.20) 50%, transparent 75%);
   top: 20vh; right: -160px;
   animation: lmFloat2 17s ease-in-out infinite alternate;
 }
-/* Pink/rose — bawah tengah */
+/* Mint Teal — bawah tengah */
 .lm-blob-3 {
   width: 460px; height: 460px;
-  background: radial-gradient(circle, rgba(249, 168, 212, 0.40) 0%, rgba(244, 114, 182, 0.22) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(56, 249, 215, 0.35) 0%, rgba(14, 165, 160, 0.18) 50%, transparent 75%);
   bottom: -100px; left: 30%;
   animation: lmFloat3 19s ease-in-out infinite alternate;
 }
@@ -145,17 +145,17 @@ body.light .lm-blobs { display: none; } /* dimatikan — bg memakai gradient Mon
 
 /* ── Nav ── */
 body.light nav {
-  background: rgba(154, 165, 184, 0.48);
+  background: rgba(255, 255, 255, 0.72);
 }
 body.light nav.scrolled {
-  background: rgba(154, 165, 184, 0.70);
+  background: rgba(255, 255, 255, 0.90);
   border-color: var(--border);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 20px rgba(48, 82, 130, 0.08);
 }
 body.light .nav-brand { color: var(--accent2); }
 body.light .nav-links a { color: var(--muted); }
-body.light .nav-links a:hover { color: #eaeef4; }
-body.light .nav-links a:hover::after { background: #eaeef4; }
+body.light .nav-links a:hover { color: var(--accent2); }
+body.light .nav-links a:hover::after { background: var(--accent2); }
 body.light .theme-toggle {
   border-color: rgba(0, 0, 0, 0.13);
   background: rgba(0, 0, 0, 0.04);
@@ -170,7 +170,7 @@ body.light .theme-toggle:hover {
 /* ── Hero ── */
 body.light .hero-marquee-track span {
   color: transparent;
-  -webkit-text-stroke: 4px #1e3a8a;
+  -webkit-text-stroke: 3px #1e3a8a;
 }
 body.light .hero-scroll-label span { color: rgba(15, 23, 42, 0.38); }
 body.light .hero-scroll-line {
@@ -303,7 +303,7 @@ body.light .cf-input:focus {
   background: rgba(255,255,255,0.95);
 }
 body.light .cf-submit {
-  background: #0f172a;
+  background: #1e3a8a;
   color: #fff;
 }
 body.light .cf-submit:hover { background: var(--accent2); }
@@ -325,8 +325,9 @@ body.light .intro-tag {
   color: var(--text);
 }
 body.light .badge-open {
-  background: rgba(22, 163, 74, 0.10);
-  border-color: rgba(22, 163, 74, 0.25);
+  background: rgba(48, 82, 130, 0.10);
+  border-color: rgba(48, 82, 130, 0.28);
+  color: var(--accent2);
 }
 
 /* ── Buttons ── */
@@ -349,9 +350,40 @@ body.light footer {
 body.light .nav-links { background: transparent; }
 @media (max-width: 680px) {
   body.light .nav-links {
-    background: rgba(238, 242, 249, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     border-color: var(--border);
   }
+}
+
+/* ── Light mode — hardcoded sky-blue accents → soft navy ── */
+body.light .intro-badge {
+  background: rgba(48, 82, 130, 0.10);
+  border-color: rgba(48, 82, 130, 0.30);
+  color: var(--accent2);
+}
+body.light .intro-tag:hover {
+  border-color: var(--accent3);
+  color: var(--accent3);
+  background: rgba(48, 82, 130, 0.08);
+}
+body.light .intro-social:hover {
+  border-color: var(--accent3);
+  color: var(--accent3);
+  background: rgba(48, 82, 130, 0.08);
+}
+body.light .intro-visual-ring--inner { border-color: rgba(48, 82, 130, 0.25); }
+body.light .intro-visual-core {
+  border-color: rgba(48, 82, 130, 0.30);
+  box-shadow: 0 0 40px rgba(48, 82, 130, 0.14), 0 0 80px rgba(48, 82, 130, 0.08);
+}
+body.light .contact-orb--right {
+  background: radial-gradient(circle, rgba(48,82,130,0.12) 0%, transparent 70%);
+}
+body.light .contact-social:hover {
+  border-color: var(--accent3);
+  color: var(--accent3);
+  background: rgba(48, 82, 130, 0.08);
+  box-shadow: 0 8px 22px rgba(48, 82, 130, 0.15);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -514,7 +546,7 @@ nav {
   padding: 0 var(--sp-10);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   background: rgba(1, 4, 15, 0.42);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -640,12 +672,13 @@ nav.scrolled {
   will-change: transform;
 }
 .hero-marquee-track span {
-  font-size: clamp(5rem, 14vw, 16rem);
-  font-weight: 900;
-  letter-spacing: -0.02em;
+  font-family: 'Panchang', -apple-system, sans-serif;
+  font-size: clamp(4.5rem, 12vw, 14rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 4px #ffffff;
+  -webkit-text-stroke: 3px #ffffff;
   text-transform: uppercase;
   padding-right: 0.5em;
   flex-shrink: 0;
@@ -1209,8 +1242,8 @@ section + section::before {
   gap: var(--sp-2);
   padding: var(--sp-2) var(--sp-4);
   border-radius: var(--r-full);
-  background: rgba(244, 114, 182, 0.12);
-  border: 1px solid rgba(244, 114, 182, 0.30);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.30);
   color: var(--accent3);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
@@ -1228,7 +1261,7 @@ section + section::before {
   margin-bottom: var(--sp-4);
 }
 .intro-title-accent {
-  background: linear-gradient(90deg, var(--accent3), #f472b6, var(--accent2));
+  background: linear-gradient(90deg, var(--accent2), var(--accent3), var(--teal));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1274,7 +1307,7 @@ section + section::before {
 .intro-tag:hover {
   border-color: var(--accent3);
   color: var(--accent3);
-  background: rgba(249, 168, 212, 0.08);
+  background: rgba(56, 189, 248, 0.08);
 }
 
 /* CTA buttons */
@@ -1305,7 +1338,7 @@ section + section::before {
 .intro-social:hover {
   border-color: var(--accent3);
   color: var(--accent3);
-  background: rgba(249, 168, 212, 0.10);
+  background: rgba(56, 189, 248, 0.10);
   transform: translateY(-3px);
 }
 
@@ -1332,7 +1365,7 @@ section + section::before {
 }
 .intro-visual-ring--inner {
   inset: 18%;
-  border-color: rgba(249, 168, 212, 0.22);
+  border-color: rgba(56, 189, 248, 0.22);
   animation-duration: 14s;
   animation-direction: reverse;
 }
@@ -1345,7 +1378,7 @@ section + section::before {
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid rgba(91, 164, 245, 0.25);
-  box-shadow: 0 0 40px rgba(42, 125, 225, 0.18), 0 0 80px rgba(249, 168, 212, 0.10);
+  box-shadow: 0 0 40px rgba(42, 125, 225, 0.18), 0 0 80px rgba(56, 189, 248, 0.10);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1977,7 +2010,7 @@ body.light .gallery-view-all-btn:hover {
 }
 .contact-orb--right {
   width: 420px; height: 420px;
-  background: radial-gradient(circle, rgba(249,168,212,0.11) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
   top: 20px; right: -120px;
 }
 
@@ -2031,16 +2064,18 @@ body.light .gallery-view-all-btn:hover {
   margin: 0;
 }
 .contact-heading-accent {
-  background: linear-gradient(90deg, #1e3a8a, #3b5b9c, #94a3b8);
+  background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 50%, #38f9d7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.3));
 }
 body.light .contact-heading-accent {
-  background: linear-gradient(90deg, var(--accent3), #f472b6, var(--accent2));
+  background: linear-gradient(135deg, #1e3a8a 0%, #305282 55%, #5b7fb5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: none;
 }
 
 /* Description */
@@ -2164,9 +2199,9 @@ body.light .contact-heading-accent {
 .contact-social:hover {
   border-color: var(--accent3);
   color: var(--accent3);
-  background: rgba(249,168,212,0.10);
+  background: rgba(56,189,248,0.10);
   transform: translateY(-4px);
-  box-shadow: 0 8px 22px rgba(249,168,212,0.20);
+  box-shadow: 0 8px 22px rgba(56,189,248,0.20);
 }
 
 /* ── RIGHT column — Form ── */

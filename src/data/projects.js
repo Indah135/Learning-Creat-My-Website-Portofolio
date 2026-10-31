@@ -1,6 +1,6 @@
 export const PROJECTS = [
   {
-    emoji: '📊', c1: '#f9a8d4', c2: '#f472b6',
+    emoji: '📊', c1: '#38bdf8', c2: '#2563eb',
     title: 'Real-Time Analytics Dashboard',
     desc: 'An interactive data visualization platform featuring dynamic metrics, KPI tracking, responsive charts, and automated reporting.',
     tags: ['React', 'TypeScript', 'Tailwind', 'D3.js'],
@@ -8,7 +8,7 @@ export const PROJECTS = [
     link: 'https://github.com/Indah135', // Masukkan link proyek Anda di sini
   },
   {
-    emoji: '🛒', c1: '#ff9ecd', c2: '#f5576c',
+    emoji: '🛒', c1: '#00f2fe', c2: '#4facfe',
     title: 'Modern E-Commerce Platform',
     desc: 'A full-featured digital storefront with intuitive product cataloging, seamless cart workflows, and secure payment integrations.',
     tags: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe'],
@@ -32,7 +32,7 @@ export const PROJECTS = [
     link: 'https://github.com/Indah135', // Masukkan link proyek Anda di sini
   },
   {
-    emoji: '🏫', c1: '#ffd28f', c2: '#f9a8d4',
+    emoji: '🏫', c1: '#38f9d7', c2: '#4facfe',
     title: 'Smart Campus Attendance System',
     desc: 'QR-code driven digital attendance and verification portal with automated student logging, analytics, and admin reporting.',
     tags: ['React', 'Node.js', 'PostgreSQL', 'REST API'],
