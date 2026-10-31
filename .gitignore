@@ -18,7 +18,7 @@ dist-ssr
 *.local
 
 # ============================================================
-# ENVIRONMENT VARIABLES — Berisi kredensial rahasia
+# EVIRONMENT VARIABLES — Berisi kredensial rahasia
 # Buat file .env.example (tanpa nilai asli) sebagai panduan
 # ============================================================
 .env
