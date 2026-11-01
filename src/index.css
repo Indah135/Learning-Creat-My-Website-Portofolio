@@ -2433,39 +2433,52 @@ footer {
     padding-bottom: calc(var(--sp-8) + 4.5rem);
   }
 
-  /* ── Hero Mobile: Samakan proporsi foto & marquee dengan desktop ── */
+  /* ── Hero Mobile: Foto tepat di tengah tulisan marquee Indah Amiati ── */
   #hero {
-    min-height: 100vh;
-    min-height: 100svh;
-    height: 100vh;
-    height: 100svh;
+    min-height: auto;
+    height: 66svh;
     padding: 0;
+    position: relative;
+    overflow: hidden;
   }
 
   .hero-photo-wrap {
-    height: 84vh;
-    height: 84svh;
-    max-height: 84svh;
-    bottom: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    max-height: 100%;
+    max-width: 92vw;
     width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero-photo {
     height: 100%;
     width: auto;
-    max-width: none;
+    max-width: 100%;
     object-fit: contain;
-    object-position: center bottom;
+    object-position: center center;
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%);
+    mask-image: linear-gradient(to top, transparent 0%, black 15%);
   }
 
   .hero-marquee {
-    top: 53%;
+    position: absolute;
+    inset: 0;
+    top: 50%;
     bottom: auto;
     transform: translateY(-50%);
+    display: flex;
+    align-items: center;
   }
 
   .hero-marquee-track span {
-    font-size: clamp(2.6rem, 12.5vw, 4rem);
+    font-size: clamp(2.3rem, 11vw, 3.4rem);
     -webkit-text-stroke: 2px #ffffff;
     letter-spacing: 0.02em;
   }
@@ -2476,6 +2489,15 @@ footer {
 
   .hero-scroll-label {
     display: none;
+  }
+
+  /* ── Naikkan tampilan About di mobile agar tidak jauh & lebih padu ── */
+  #about {
+    padding-top: 1.25rem;
+  }
+  #about::before {
+    margin-bottom: 1.5rem;
+    width: 90%;
   }
 
   .hero-stats {
@@ -2537,6 +2559,27 @@ footer {
 ═══════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
   .hero-name { letter-spacing: -0.5px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PHOTO BOTTOM BLUR / FOG — mobile, tablet, iPad
+═══════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-photo-wrap::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 40%;
+    z-index: 2;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 25%, transparent 100%);
+    mask-image: linear-gradient(to top, #000 0%, #000 25%, transparent 100%);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
