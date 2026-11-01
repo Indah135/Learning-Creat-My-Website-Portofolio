@@ -2444,8 +2444,8 @@ footer {
 
   .hero-photo-wrap {
     position: absolute;
-    /* digeser ke atas agar orang di foto berada di tengah garis teks marquee */
-    top: 35%;
+    /* di tengah tampilan halaman */
+    top: 50%;
     left: 50%;
     bottom: auto;
     transform: translate(-50%, -50%);
@@ -2474,8 +2474,8 @@ footer {
   .hero-marquee {
     position: absolute;
     inset: 0;
-    /* disamakan dengan posisi foto agar tulisan menyesuaikan */
-    top: 35%;
+    /* di tengah tampilan halaman, sejajar dengan foto */
+    top: 50%;
     bottom: auto;
     transform: translateY(-50%);
     display: flex;
@@ -2499,8 +2499,8 @@ footer {
   /* ── Naikkan tampilan About di mobile agar tidak jauh & lebih padu ── */
   #about {
     padding-top: 1.25rem;
-    /* tarik About ke atas menutup area kosong di bawah foto */
-    margin-top: -12svh;
+    /* naikkan sedikit agar lebih rapat dengan foto */
+    margin-top: -3svh;
   }
   #about::before {
     margin-bottom: 1.5rem;
