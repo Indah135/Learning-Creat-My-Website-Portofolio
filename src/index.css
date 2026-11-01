@@ -2444,7 +2444,8 @@ footer {
 
   .hero-photo-wrap {
     position: absolute;
-    top: 50%;
+    /* digeser ke atas agar orang di foto berada di tengah garis teks marquee */
+    top: 35%;
     left: 50%;
     bottom: auto;
     transform: translate(-50%, -50%);
@@ -2463,14 +2464,18 @@ footer {
     max-width: 100%;
     object-fit: contain;
     object-position: center center;
-    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%);
-    mask-image: linear-gradient(to top, transparent 0%, black 15%);
+    mix-blend-mode: normal;
+    filter: contrast(1.05) brightness(1.0) saturate(1.0);
+    /* fade bawah transparan — sama persis dengan desktop */
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%);
+    mask-image: linear-gradient(to top, transparent 0%, black 25%);
   }
 
   .hero-marquee {
     position: absolute;
     inset: 0;
-    top: 50%;
+    /* disamakan dengan posisi foto agar tulisan menyesuaikan */
+    top: 35%;
     bottom: auto;
     transform: translateY(-50%);
     display: flex;
@@ -2494,6 +2499,8 @@ footer {
   /* ── Naikkan tampilan About di mobile agar tidak jauh & lebih padu ── */
   #about {
     padding-top: 1.25rem;
+    /* tarik About ke atas menutup area kosong di bawah foto */
+    margin-top: -12svh;
   }
   #about::before {
     margin-bottom: 1.5rem;
@@ -2559,27 +2566,6 @@ footer {
 ═══════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
   .hero-name { letter-spacing: -0.5px; }
-}
-
-/* ═══════════════════════════════════════════════════════
-   PHOTO BOTTOM BLUR / FOG — mobile, tablet, iPad
-═══════════════════════════════════════════════════════ */
-@media (max-width: 1024px) {
-  .hero-photo-wrap::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 100vw;
-    height: 40%;
-    z-index: 2;
-    pointer-events: none;
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
-    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 25%, transparent 100%);
-    mask-image: linear-gradient(to top, #000 0%, #000 25%, transparent 100%);
-  }
 }
 
 /* ═══════════════════════════════════════════════════════
