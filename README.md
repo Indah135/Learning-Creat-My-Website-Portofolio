@@ -3,7 +3,6 @@
 # 💫 [Indah Amiati](https://github.com/Indah135) — Portfolio Website
 
 **Website portfolio pribadi seorang Mahasiswa Informatika & Frontend Developer**  
-*Dibangun dengan React 19 + Vite — tanpa UI library, semua animasi ditulis manual.*
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
