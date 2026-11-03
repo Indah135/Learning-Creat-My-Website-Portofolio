@@ -21,6 +21,32 @@ export const resolveAsset = (path) => {
   return `${BASE_PATH}${clean}`;
 };
 
+// Link Google Docs CV (otomatis diekspor sebagai PDF saat tombol Unduh CV ditekan)
+export const GOOGLE_DOCS_CV_URL =
+  'https://docs.google.com/document/d/1q_8eGUC5Bd0PJHUHUurAro4ZflW3Kz7X28egK89feTQ/export?format=pdf';
+
+// Ubah link Google Docs (view/edit) menjadi link ekspor PDF
+export const toGoogleDocsPdfUrl = (url) => {
+  if (!url) return '';
+  const trimmed = url.trim();
+  if (!trimmed.includes('docs.google.com')) return trimmed;
+  const docId = trimmed.match(/\/document\/d\/([A-Za-z0-9_-]+)/);
+  if (docId) {
+    return `https://docs.google.com/document/d/${docId[1]}/export?format=pdf`;
+  }
+  return trimmed;
+};
+
+// Selalu kembalikan link unduh CV yang valid (Google Docs -> PDF)
+// Path lokal seperti /cv.pdf atau http://localhost diabaikan agar pengunjung
+// tetap mendapat PDF dari Google Docs.
+export const resolveCvUrl = (url) => {
+  const cv = (url || '').trim();
+  if (cv.includes('docs.google.com')) return toGoogleDocsPdfUrl(cv);
+  if (/^https:\/\//i.test(cv)) return cv;
+  return GOOGLE_DOCS_CV_URL;
+};
+
 export const INITIAL_PORTFOLIO_DATA = {
   profile: {
     name: 'Indah Amiati',
@@ -29,7 +55,7 @@ export const INITIAL_PORTFOLIO_DATA = {
     bio: 'Saya adalah mahasiswa Informatika UTDI yang berfokus pada Frontend Development. Saya tertarik membangun antarmuka web yang responsif, fungsional, dan mudah digunakan dengan desain yang sederhana serta berpusat pada pengguna. Saya senang mempelajari teknologi baru, mengembangkan keterampilan, dan berkolaborasi dalam tim untuk menciptakan pengalaman web yang menarik dan bermanfaat.',
     photo: resolveAsset('/photo/indah2.png'),
     aboutVisual: resolveAsset('/photo/properti.png'),
-    cvUrl: resolveAsset('/cv.pdf'),
+    cvUrl: resolveCvUrl(),
     cvName: 'CV_Indah_Amiati.pdf',
   },
   education: [
@@ -94,7 +120,7 @@ export function PortfolioProvider({ children }) {
             ...savedProfile,
             photo: resolveAsset(savedProfile.photo || '/photo/indah2.png'),
             aboutVisual: resolveAsset(savedProfile.aboutVisual || '/photo/properti.png'),
-            cvUrl: resolveAsset(savedProfile.cvUrl || '/cv.pdf'),
+            cvUrl: resolveCvUrl(savedProfile.cvUrl),
           },
           contact: { ...INITIAL_PORTFOLIO_DATA.contact, ...(parsed.contact || {}) },
           projects: (parsed.projects?.length ? parsed.projects : INITIAL_PORTFOLIO_DATA.projects).map(p => ({
@@ -133,9 +159,14 @@ export function PortfolioProvider({ children }) {
       const json = await res.json();
       if (json.status === 'success' && json.data) {
         setDbConnected(true);
+        const dbProfile = json.data.profile || {};
         setData((prev) => ({
           ...prev,
-          profile: { ...prev.profile, ...(json.data.profile || {}) },
+          profile: {
+            ...prev.profile,
+            ...dbProfile,
+            cvUrl: resolveCvUrl(dbProfile.cvUrl || prev.profile.cvUrl),
+          },
           education: json.data.education?.length ? json.data.education : prev.education,
           skills: json.data.skills?.length ? json.data.skills : prev.skills,
           interests: json.data.interests?.length ? json.data.interests : prev.interests,
@@ -331,7 +362,11 @@ export function PortfolioProvider({ children }) {
     setData({
       ...INITIAL_PORTFOLIO_DATA,
       ...importedData,
-      profile: { ...INITIAL_PORTFOLIO_DATA.profile, ...(importedData.profile || {}) },
+      profile: {
+        ...INITIAL_PORTFOLIO_DATA.profile,
+        ...(importedData.profile || {}),
+        cvUrl: resolveCvUrl(importedData.profile?.cvUrl),
+      },
       contact: { ...INITIAL_PORTFOLIO_DATA.contact, ...(importedData.contact || {}) },
     });
     return true;

@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { usePortfolio, resolveAsset } from '../context/PortfolioContext';
+import { usePortfolio, resolveAsset, resolveCvUrl } from '../context/PortfolioContext';
 
 function CapIcon() {
   return (
@@ -31,6 +32,40 @@ function HeartIcon() {
 export default function About() {
   const { ref, visible } = useScrollReveal();
   const { profile, education, skills, interests } = usePortfolio();
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownloadCv = async (e) => {
+    e.preventDefault();
+    if (downloading) return;
+
+    const href = resolveCvUrl(profile.cvUrl);
+    const fileName = profile.cvName || 'CV_Indah_Amiati.pdf';
+    setDownloading(true);
+
+    try {
+      const res = await fetch(href, { credentials: 'omit', redirect: 'follow' });
+      const contentType = res.headers.get('content-type') || '';
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!contentType.includes('pdf')) throw new Error(`Bukan PDF: ${contentType}`);
+
+      const blob = await res.blob();
+      if (!blob.size) throw new Error('File kosong');
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch (err) {
+      console.warn('Unduh via fetch gagal, buka link unduhan langsung:', err);
+      window.location.href = href;
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <section
@@ -57,17 +92,18 @@ export default function About() {
           <div className="about-role-row">
             <p className="about-role">{profile.role || 'Informatics Student | Frontend Developer'}</p>
             <a
-              href={profile.cvUrl || '/cv.pdf'}
+              href={resolveCvUrl(profile.cvUrl)}
               download={profile.cvName || 'CV_Indah_Amiati.pdf'}
               className="about-cv-btn"
               title="Unduh CV"
+              onClick={handleDownloadCv}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              <span>Unduh CV</span>
+              <span>{downloading ? 'Mengunduh…' : 'Unduh CV'}</span>
             </a>
           </div>
 
