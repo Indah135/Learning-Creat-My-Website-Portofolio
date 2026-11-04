@@ -83,8 +83,6 @@ body.light {
 body.light {
   background-color: #ffffff;
   background-image:
-    repeating-linear-gradient(90deg, rgba(43, 92, 146, 0.07) 0 1px, transparent 1px 52px),
-    repeating-linear-gradient(0deg, rgba(43, 92, 146, 0.07) 0 1px, transparent 1px 52px),
     linear-gradient(65deg, #6c8496 0%, #2b5c92 26%, #b3cde0 62%, #ffffff 100%);
   background-attachment: fixed;
   background-size: cover;
@@ -179,8 +177,9 @@ body.light .pill-item.active {
 }
 
 /* ── Hero ── */
-body.light .hero-marquee {
-  display: none;
+body.light .hero-marquee-track span {
+  color: transparent;
+  -webkit-text-stroke: 3px #1e3a8a;
 }
 body.light .hero-scroll-label span { color: rgba(15, 23, 42, 0.38); }
 body.light .hero-scroll-line {
@@ -2508,6 +2507,10 @@ footer {
     font-size: clamp(2.3rem, 11vw, 3.4rem);
     -webkit-text-stroke: 2px #ffffff;
     letter-spacing: 0.02em;
+  }
+
+  body.light .hero-marquee-track span {
+    -webkit-text-stroke: 2px #1e3a8a;
   }
 
   .hero-scroll-label {
