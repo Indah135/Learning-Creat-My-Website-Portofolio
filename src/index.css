@@ -79,10 +79,13 @@ body.light {
   --nav-active: #eef2f9;
 }
 
-/* White & Soft Navy — putih dominan dengan biru tua soft di sudut */
+/* Starry Night — midnight blue → soft indigo → light blue → white */
 body.light {
   background-color: #ffffff;
-  background-image: linear-gradient(45deg, #ffffff 0%, #e4ebf6 55%, #305282 100%);
+  background-image:
+    repeating-linear-gradient(90deg, rgba(43, 92, 146, 0.07) 0 1px, transparent 1px 52px),
+    repeating-linear-gradient(0deg, rgba(43, 92, 146, 0.07) 0 1px, transparent 1px 52px),
+    linear-gradient(65deg, #6c8496 0%, #2b5c92 26%, #b3cde0 62%, #ffffff 100%);
   background-attachment: fixed;
   background-size: cover;
   background-position: center center;
@@ -155,14 +158,15 @@ body.light nav.glass-pill-nav.scrolled {
   box-shadow: none;
 }
 body.light .pill-container {
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(48, 82, 130, 0.22);
-  box-shadow: 0 10px 30px rgba(48, 82, 130, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(48, 82, 130, 0.28);
+  border-top: none;
+  box-shadow: 0 12px 30px rgba(48, 82, 130, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 body.light nav.glass-pill-nav.scrolled .pill-container {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(48, 82, 130, 0.35);
-  box-shadow: 0 12px 36px rgba(48, 82, 130, 0.18);
+  background: rgba(255, 255, 255, 0.99);
+  border-color: rgba(48, 82, 130, 0.4);
+  box-shadow: 0 14px 36px rgba(48, 82, 130, 0.2);
 }
 body.light .pill-item {
   color: #475569;
@@ -175,9 +179,8 @@ body.light .pill-item.active {
 }
 
 /* ── Hero ── */
-body.light .hero-marquee-track span {
-  color: transparent;
-  -webkit-text-stroke: 3px #1e3a8a;
+body.light .hero-marquee {
+  display: none;
 }
 body.light .hero-scroll-label span { color: rgba(15, 23, 42, 0.38); }
 body.light .hero-scroll-line {
@@ -535,15 +538,15 @@ body.splash-active { overflow: hidden; }
 }
 
 /* ═══════════════════════════════════════════════════════
-   NAVIGATION — Floating Glass Pill Navbar
+   NAVIGATION — Full-width, menempel batasan atas, isi di tengah (desktop)
 ═══════════════════════════════════════════════════════ */
 nav.glass-pill-nav {
   position: fixed;
-  top: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
-  right: auto;
+  top: 0;
+  left: 0;
+  right: 0;
   bottom: auto;
+  width: 100%;
   z-index: 1000;
   height: auto;
   padding: 0;
@@ -553,37 +556,39 @@ nav.glass-pill-nav {
   border: none;
   box-shadow: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   pointer-events: none;
 }
 
 .pill-container {
   pointer-events: auto;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  min-width: 480px;
-  max-width: 90vw;
-  gap: 2.25rem;
-  padding: 0.68rem 2.4rem;
-  border-radius: 9999px;
-  background: rgba(7, 20, 48, 0.45);
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: unset;
+  gap: 2.75rem;
+  padding: 0.7rem 2.4rem;
+  border-radius: 0 0 var(--r-xl) var(--r-xl);
+  background: rgba(7, 20, 48, 0.88);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35),
-              inset 0 1px 1px rgba(255, 255, 255, 0.32),
-              0 0 20px rgba(56, 189, 248, 0.1);
+  border-top: none;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38),
+              inset 0 1px 1px rgba(255, 255, 255, 0.28),
+              0 0 22px rgba(56, 189, 248, 0.1);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 nav.glass-pill-nav.scrolled .pill-container {
-  background: rgba(5, 14, 38, 0.72);
-  border-color: rgba(56, 189, 248, 0.3);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5),
-              inset 0 1px 1px rgba(255, 255, 255, 0.25),
-              0 0 24px rgba(56, 189, 248, 0.16);
+  background: rgba(5, 14, 38, 0.96);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.55),
+              inset 0 1px 1px rgba(255, 255, 255, 0.22),
+              0 0 26px rgba(56, 189, 248, 0.16);
 }
 
 .pill-item {
@@ -1088,6 +1093,7 @@ section {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: var(--sp-16) var(--sp-8);
+  scroll-margin-top: calc(var(--nav-h) + 8px);
 }
 /* Hero overrides the shared section constraints */
 #hero {
@@ -2391,28 +2397,44 @@ footer {
 
   nav.glass-pill-nav {
     top: auto;
-    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    width: calc(100% - 1.5rem);
-    max-width: 390px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    transform: none;
     justify-content: center;
     padding: 0;
+    align-items: flex-end;
   }
   .pill-container {
     width: 100%;
+    max-width: 100%;
     min-width: unset;
     justify-content: space-around;
     gap: 0.5rem;
-    padding: 0.55rem 0.8rem;
-    box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.4),
+    padding: 0.55rem 0.8rem calc(0.55rem + env(safe-area-inset-bottom, 0px));
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-bottom: none;
+    box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.45),
                 inset 0 1px 1px rgba(255, 255, 255, 0.32),
                 0 0 20px rgba(56, 189, 248, 0.12);
   }
+  nav.glass-pill-nav.scrolled .pill-container {
+    border-color: rgba(56, 189, 248, 0.35);
+    box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.55),
+                inset 0 1px 1px rgba(255, 255, 255, 0.22),
+                0 0 24px rgba(56, 189, 248, 0.16);
+  }
   body.light .pill-container {
-    box-shadow: 0 -4px 25px rgba(48, 82, 130, 0.15),
+    border: 1px solid rgba(48, 82, 130, 0.28);
+    border-bottom: none;
+    box-shadow: 0 -10px 25px rgba(48, 82, 130, 0.15),
                 inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  }
+  body.light nav.glass-pill-nav.scrolled .pill-container {
+    border-color: rgba(48, 82, 130, 0.4);
   }
   .pill-item {
     padding: 3px 6px;
@@ -2486,10 +2508,6 @@ footer {
     font-size: clamp(2.3rem, 11vw, 3.4rem);
     -webkit-text-stroke: 2px #ffffff;
     letter-spacing: 0.02em;
-  }
-
-  body.light .hero-marquee-track span {
-    -webkit-text-stroke: 2px #1e3a8a;
   }
 
   .hero-scroll-label {
