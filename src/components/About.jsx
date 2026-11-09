@@ -132,7 +132,7 @@ export default function About() {
       </div>
 
       <div className="about-cards">
-        <div className="about-card">
+        <div className="about-card" style={{ '--card-i': 0 }}>
           <div className="about-card-head">
             <CapIcon />
             <span className="about-card-divider" />
@@ -152,28 +152,28 @@ export default function About() {
           </div>
         </div>
 
-        <div className="about-card">
+        <div className="about-card" style={{ '--card-i': 1 }}>
           <div className="about-card-head">
             <CodeIcon />
             <span className="about-card-divider" />
             <h3>Skills</h3>
           </div>
           <div className="about-pills">
-            {skills && skills.map(tag => (
-              <span key={tag} className="about-pill">{tag}</span>
+            {skills && skills.map((tag, idx) => (
+              <span key={tag} className="about-pill" style={{ '--pill-i': idx }}>{tag}</span>
             ))}
           </div>
         </div>
 
-        <div className="about-card">
+        <div className="about-card" style={{ '--card-i': 2 }}>
           <div className="about-card-head">
             <HeartIcon />
             <span className="about-card-divider" />
             <h3>Interests</h3>
           </div>
           <div className="interest-list">
-            {interests && interests.map(item => (
-              <span key={item} className="interest-item">
+            {interests && interests.map((item, idx) => (
+              <span key={item} className="interest-item" style={{ '--interest-i': idx }}>
                 <span className="interest-dot" />
                 {item}
               </span>

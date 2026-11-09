@@ -2,14 +2,23 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function Navbar({ isLight, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('hero');
   const navRef = useRef(null);
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 40);
+      const currentScroll = window.scrollY;
+      setScrolled(currentScroll > 40);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const percent = Math.min(100, Math.max(0, (currentScroll / totalHeight) * 100));
+        setScrollProgress(percent);
+      }
     }
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -75,7 +84,11 @@ export default function Navbar({ isLight, onToggleTheme }) {
   ];
 
   return (
-    <nav id="navbar" ref={navRef} className={`glass-pill-nav${scrolled ? ' scrolled' : ''}`}>
+    <>
+      <div className="scroll-progress-container" aria-hidden="true">
+        <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }} />
+      </div>
+      <nav id="navbar" ref={navRef} className={`glass-pill-nav${scrolled ? ' scrolled' : ''}`}>
       <div className="pill-container">
         {links.map(({ href, id, label, icon }) => {
           const isActive = activeSection === id;
@@ -113,5 +126,6 @@ export default function Navbar({ isLight, onToggleTheme }) {
         </button>
       </div>
     </nav>
+    </>
   );
 }
