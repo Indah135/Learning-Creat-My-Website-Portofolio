@@ -2834,6 +2834,42 @@ body.light .contact-heading-accent {
   background: linear-gradient(135deg, var(--green), #2da842) !important;
   box-shadow: 0 4px 16px rgba(63,185,80,0.30) !important;
 }
+.cf-submit--error {
+  background: linear-gradient(135deg, #b91c1c, #ef4444) !important;
+  box-shadow: 0 4px 16px rgba(239,68,68,0.28) !important;
+}
+.btn:disabled { opacity: 0.75; cursor: wait; }
+
+/* Status note di bawah tombol submit */
+.cf-note {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  animation: splashFadeUp 0.35s ease both;
+}
+.cf-note--error {
+  color: #ffb4b4;
+  background: rgba(239, 68, 68, 0.10);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.cf-note--info {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.10);
+  border-color: rgba(59, 130, 246, 0.30);
+}
+body.light .cf-note--error {
+  color: #b42318;
+  background: rgba(239, 68, 68, 0.07);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+body.light .cf-note--info {
+  color: #0369a1;
+  background: rgba(0, 150, 199, 0.08);
+  border-color: rgba(0, 150, 199, 0.25);
+}
 
 
 

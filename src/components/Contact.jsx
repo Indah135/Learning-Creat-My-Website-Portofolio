@@ -1,6 +1,7 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useState } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
+import { FORMSPREE_ENDPOINT } from '../config';
 
 export default function Contact() {
   const { ref, visible } = useScrollReveal();
@@ -53,31 +54,103 @@ export default function Contact() {
   ];
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | ok | error
+  const [note, setNote] = useState(null);       // { type: 'error' | 'info', text }
   const [focused, setFocused] = useState('');
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const showOk = (resetForm = true) => {
+    if (resetForm) setFormData({ name: '', email: '', message: '' });
+    setNote(null);
+    setStatus('ok');
+    setTimeout(() => setStatus('idle'), 4000);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (status === 'sending') return;
 
-    try {
-      if (apiUrl) {
-        await fetch(`${apiUrl.replace(/\/$/, '')}/messages.php`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        });
-      }
-    } catch (err) {
-      console.warn('Message saved locally / offline:', err);
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !message) {
+      setStatus('error');
+      setNote({ type: 'error', text: 'Mohon lengkapi semua kolom sebelum mengirim.' });
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus('error');
+      setNote({ type: 'error', text: 'Format email tidak valid.' });
+      return;
     }
 
-    setTimeout(() => setSubmitted(false), 3500);
-    setFormData({ name: '', email: '', message: '' });
+    setStatus('sending');
+    setNote(null);
+
+    // 1) Formspree — pesan diteruskan langsung ke email pemilik website
+    if (FORMSPREE_ENDPOINT) {
+      try {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            _subject: `Pesan baru dari ${name} — Portfolio Indah`,
+            _replyto: email,
+          }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data?.errors?.[0]?.message || data?.message || `HTTP ${res.status}`);
+        }
+        showOk();
+        return;
+      } catch (err) {
+        console.warn('Formspree error:', err);
+        setStatus('error');
+        setNote({
+          type: 'error',
+          text: `Gagal mengirim pesan (${err.message}). Coba lagi beberapa saat, atau email langsung ke ${emailVal}.`,
+        });
+        return;
+      }
+    }
+
+    // 2) Fallback: backend PHP (berfungsi saat dev lokal dengan API berjalan)
+    if (apiUrl) {
+      try {
+        const res = await fetch(`${apiUrl.replace(/\/$/, '')}/messages.php`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message }),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        showOk();
+        return;
+      } catch (err) {
+        console.warn('Message API offline:', err);
+      }
+    }
+
+    // 3) Fallback terakhir: buka aplikasi email pengunjung yang sudah terisi
+    const subject = `Pesan portfolio dari ${name}`;
+    const body = `Nama: ${name}\nEmail: ${email}\n\n${message}`;
+    window.location.href = `mailto:${emailVal}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    showOk(false);
+    setNote({
+      type: 'info',
+      text: 'Pengiriman otomatis belum aktif — aplikasi email Anda dibuka, silakan tekan Kirim di sana.',
+    });
+    setTimeout(() => setNote(null), 8000);
   };
 
 
@@ -221,13 +294,24 @@ export default function Contact() {
                 />
               </div>
 
-              <button type="submit" className={`cf-submit btn${submitted ? ' cf-submit--ok' : ' btn-primary'}`}>
-                {submitted ? (
+              <button
+                type="submit"
+                className={`cf-submit btn${status === 'ok' ? ' cf-submit--ok' : status === 'error' ? ' cf-submit--error' : ' btn-primary'}`}
+                disabled={status === 'sending'}
+              >
+                {status === 'ok' ? (
                   <>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20 6 9 17l-5-5"/>
                     </svg>
                     Pesan Terkirim!
+                  </>
+                ) : status === 'sending' ? (
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/>
+                    </svg>
+                    Mengirim...
                   </>
                 ) : (
                   <>
@@ -238,6 +322,12 @@ export default function Contact() {
                   </>
                 )}
               </button>
+
+              {note && (
+                <p className={`cf-note cf-note--${note.type}`} role="status">
+                  {note.text}
+                </p>
+              )}
             </form>
           </div>
         </div>
