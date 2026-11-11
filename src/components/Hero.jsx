@@ -88,6 +88,7 @@ export default function Hero() {
         />
       </div>
 
+// Badge removed
       {/* Scroll label */}
       <div
         className="hero-scroll-label"

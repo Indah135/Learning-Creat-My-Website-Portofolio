@@ -11,10 +11,13 @@ export function useScrollReveal(options = {}) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          observer.unobserve(el);
+        } else if (entry.boundingClientRect.top > window.innerHeight) {
+          // Reset hanya saat elemen berada di bawah viewport (scrolled back up)
+          // sehingga transisi masuk bisa dinikmati kembali saat scroll ke bawah
+          setVisible(false);
         }
       },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px', ...options }
+      { threshold: 0.10, rootMargin: '0px 0px -50px 0px', ...options }
     );
     observer.observe(el);
     return () => observer.disconnect();
