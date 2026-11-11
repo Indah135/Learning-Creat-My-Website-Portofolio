@@ -11,6 +11,7 @@ export default function Hero() {
   useEffect(() => {
     const heroEl = heroRef.current;
     if (!heroEl) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
     let rafId;
     let targetX = 0;
@@ -19,7 +20,6 @@ export default function Hero() {
     let currentY = 0;
 
     const handleMouseMove = (e) => {
-      if (window.matchMedia('(pointer: coarse)').matches) return;
       const rect = heroEl.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
       const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
@@ -70,7 +70,7 @@ export default function Hero() {
       <div
         className="hero-photo-wrap"
         style={{
-          transform: `translateX(calc(-50% + ${offset.x.toFixed(2)}px)) translateY(${offset.y.toFixed(2)}px)`,
+          translate: `${offset.x.toFixed(2)}px ${offset.y.toFixed(2)}px`,
         }}
         onContextMenu={(e) => e.preventDefault()}
       >
@@ -88,7 +88,6 @@ export default function Hero() {
         />
       </div>
 
-// Badge removed
       {/* Scroll label */}
       <div
         className="hero-scroll-label"
