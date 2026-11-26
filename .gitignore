@@ -16,6 +16,8 @@ dist-ssr
 !.env.example
 
 api/
+api/mail_config.php
+api/mail_helper.php
 database/
 *.sql
 

@@ -300,15 +300,21 @@ export function PortfolioProvider({ children }) {
       }),
     }));
 
-    // Sync to MySQL API
+    // Keep the browser copy for immediate preview and sync the same edit to MySQL.
     try {
-      await fetch(`${apiUrl.replace(/\/$/, '')}/projects.php`, {
+      const response = await fetch(`${apiUrl.replace(/\/$/, '')}/projects.php`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...mergedFields, id: projectId }),
       });
+      const result = await response.json();
+      if (!response.ok || result.status !== 'success') {
+        return { saved: false, localOnly: true, message: result.message || 'Database menolak perubahan.' };
+      }
+      return { saved: true, localOnly: false };
     } catch (err) {
       console.warn('API sync failed, saved locally:', err);
+      return { saved: false, localOnly: true, message: 'Server database tidak dapat dijangkau.' };
     }
   };
 

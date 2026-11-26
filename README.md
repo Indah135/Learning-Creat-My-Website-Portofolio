@@ -223,6 +223,16 @@ npm run dev
 
 Website akan tersedia di `http://localhost:5173` dengan hot module replacement aktif.
 
+### Generator hash password admin
+
+Jalankan server PHP terpisah dari direktori root project:
+
+```bash
+php -S localhost:8000 -t tools
+```
+
+Buka `http://localhost:8000/password-hash.php`. Halaman ini memakai `password_hash()` PHP (`PASSWORD_DEFAULT`), sama dengan backend login. Password hanya diproses untuk membuat hash dan tidak disimpan.
+
 ### Backend PHP (Opsional — untuk fitur database)
 
 > Backend PHP bersifat privat dan tidak disertakan di repositori ini. Jika kamu adalah pemilik proyek, ikuti langkah berikut:
