@@ -336,6 +336,33 @@ export function PortfolioProvider({ children }) {
     }
   };
 
+  const saveAllProjects = async (projectsList = data.projects) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...data, projects: projectsList }));
+    } catch {
+      // ignore storage quota errors
+    }
+
+    try {
+      const response = await fetch(`${apiUrl.replace(/\/$/, '')}/projects.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'sync_all', projects: projectsList }),
+      });
+      const result = await response.json();
+      if (!response.ok || result.status !== 'success') {
+        return { saved: false, localOnly: true, message: result.message || 'Database menolak perubahan.' };
+      }
+      if (Array.isArray(result.projects)) {
+        setData((prev) => ({ ...prev, projects: result.projects }));
+      }
+      return { saved: true, localOnly: false };
+    } catch (err) {
+      console.warn('API sync failed, saved locally:', err);
+      return { saved: false, localOnly: true, message: 'Server database tidak dapat dijangkau.' };
+    }
+  };
+
   const updateContact = async (newContactFields) => {
     setData((prev) => ({
       ...prev,
@@ -399,6 +426,7 @@ export function PortfolioProvider({ children }) {
         addProject,
         updateProject,
         deleteProject,
+        saveAllProjects,
         updateContact,
         resetToDefaults,
         importData,

@@ -223,11 +223,31 @@ function ArrowRight() {
   );
 }
 
+function normalizeProjectUrl(rawUrl) {
+  const trimmed = (rawUrl || '').trim();
+  if (!trimmed || trimmed === '#') return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
 function ProjectCard({ project, index }) {
+  const projectUrl = normalizeProjectUrl(project.link);
+  const openProjectUrl = () => {
+    if (projectUrl) {
+      window.open(projectUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div
       className="project-card"
-      style={{ '--i': index }}
+      data-clickable={projectUrl ? 'true' : undefined}
+      style={{ '--i': index, cursor: projectUrl ? 'pointer' : undefined }}
+      onClick={(e) => {
+        if (e.target.closest('a')) return;
+        openProjectUrl();
+      }}
+      title={projectUrl ? `Buka website: ${projectUrl}` : undefined}
     >
       <div className="project-thumb" style={{ '--c1': project.c1, '--c2': project.c2 }}>
         {project.images && project.images[0] ? (
@@ -243,10 +263,13 @@ function ProjectCard({ project, index }) {
           {project.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
         </div>
         <a
-          href={project.link || '#'}
-          target={project.link ? '_blank' : undefined}
-          rel={project.link ? 'noreferrer' : undefined}
+          href={projectUrl || '#'}
+          target={projectUrl ? '_blank' : undefined}
+          rel={projectUrl ? 'noopener noreferrer' : undefined}
           className="project-link"
+          onClick={(e) => {
+            if (!projectUrl) e.preventDefault();
+          }}
         >
           View Details →
         </a>
@@ -361,13 +384,24 @@ export default function Projects() {
         {items.map(({ project, pi }, i) => {
           const d = relOf(i);
           const abs = Math.abs(d);
+          const projectUrl = normalizeProjectUrl(project.link);
           return (
             <div
-              key={project.title}
+              key={project.id || project.title || i}
               className={`gallery-card${abs === 0 ? ' is-active' : ''}`}
-              style={cardStyle(d)}
+              data-clickable={abs === 0 && projectUrl ? 'true' : undefined}
+              style={{
+                ...cardStyle(d),
+                cursor: abs === 0 && projectUrl ? 'pointer' : undefined,
+              }}
+              title={abs === 0 && projectUrl ? `Klik untuk membuka ${project.title}` : undefined}
               onClick={() => {
-                if (abs !== 0 && Date.now() - lastSwipe.current > 400) setActive(i);
+                if (Date.now() - lastSwipe.current <= 400) return;
+                if (abs !== 0) {
+                  setActive(i);
+                } else if (projectUrl) {
+                  window.open(projectUrl, '_blank', 'noopener,noreferrer');
+                }
               }}
             >
               {project.images && project.images[0] ? (

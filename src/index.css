@@ -147,6 +147,51 @@ body.light .lm-blobs { display: none; }
   to   { transform: translate(30px, -45px) scale(1.12); }
 }
 
+/* ── Night lights: cahaya abu-abu interaktif (dark mode saja) ──
+   Breathing opacity via CSS + gerakan drift/parallax via JS.
+   Warna disamakan dengan pita cahaya abu kebiruan di dark-bg.jpg */
+.nm-lights {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.light .nm-lights { display: none; }
+
+.nm-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  will-change: transform, opacity;
+  animation: nmBreath 9s ease-in-out infinite alternate;
+}
+
+/* Abu kebiruan besar — kiri atas, senada pita cahaya background */
+.nm-orb-1 {
+  width: 640px; height: 640px;
+  background: radial-gradient(circle, rgba(170, 188, 216, 0.15) 0%, rgba(140, 165, 200, 0.08) 45%, transparent 72%);
+  top: 6%; left: 10%;
+}
+/* Abu terang — kanan tengah */
+.nm-orb-2 {
+  width: 520px; height: 520px;
+  background: radial-gradient(circle, rgba(198, 209, 228, 0.12) 0%, rgba(160, 178, 205, 0.07) 50%, transparent 75%);
+  top: 40%; right: 4%;
+  animation-delay: -3s;
+}
+/* Abu pucat kecil — bawah tengah */
+.nm-orb-3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(224, 231, 243, 0.10) 0%, rgba(180, 195, 218, 0.05) 50%, transparent 75%);
+  top: 66%; left: 36%;
+  animation-delay: -6s;
+}
+@keyframes nmBreath {
+  from { opacity: 0.55; }
+  to   { opacity: 1; }
+}
+
 /* ── Glass Pill Nav Light Mode ── */
 body.light nav.glass-pill-nav {
   background: transparent;
@@ -171,18 +216,18 @@ body.light .pill-item.active {
 /* ── Glass utility: elemen kecil ── */
 body.light .intro-orbit span,
 body.light .intro-visual-core {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(210, 232, 250, 0.52);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-color: rgba(255, 255, 255, 0.70);
+  border-color: rgba(180, 215, 245, 0.72);
   box-shadow: 0 2px 10px rgba(0, 100, 180, 0.08);
 }
 body.light .cic-icon,
 body.light .cic-arrow {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(210, 232, 250, 0.52);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-color: rgba(255, 255, 255, 0.65);
+  border-color: rgba(180, 215, 245, 0.68);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -201,60 +246,60 @@ body.light footer {
   position: relative;
   isolation: isolate;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.46) 0%, rgba(255, 255, 255, 0.22) 55%, rgba(255, 255, 255, 0.13) 100%),
-    linear-gradient(115deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.30) 50%, rgba(255, 255, 255, 0) 58%),
-    rgba(255, 255, 255, 0.16);
+    linear-gradient(180deg, rgba(210, 232, 250, 0.52) 0%, rgba(210, 232, 250, 0.26) 55%, rgba(210, 232, 250, 0.14) 100%),
+    linear-gradient(115deg, rgba(210, 232, 250, 0) 42%, rgba(210, 232, 250, 0.32) 50%, rgba(210, 232, 250, 0) 58%),
+    rgba(210, 232, 250, 0.18);
   backdrop-filter: blur(26px) saturate(185%);
   -webkit-backdrop-filter: blur(26px) saturate(185%);
-  border-color: rgba(255, 255, 255, 0.72);
+  border-color: rgba(180, 215, 245, 0.72);
   box-shadow:
     0 22px 48px rgba(2, 58, 110, 0.10),
     0 6px 16px rgba(2, 58, 110, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 0 26px rgba(255, 255, 255, 0.28);
+    inset 0 1px 0 rgba(220, 240, 255, 0.95),
+    inset 0 0 26px rgba(210, 232, 250, 0.30);
 }
 body.light .about-pill,
 body.light .gallery-arrow,
 body.light .contact-social,
 body.light .intro-tag {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.24) 100%),
-    rgba(255, 255, 255, 0.18);
+    linear-gradient(180deg, rgba(210, 232, 250, 0.56) 0%, rgba(210, 232, 250, 0.28) 100%),
+    rgba(210, 232, 250, 0.20);
   backdrop-filter: blur(16px) saturate(185%);
   -webkit-backdrop-filter: blur(16px) saturate(185%);
-  border-color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(180, 215, 245, 0.75);
   box-shadow:
     0 8px 20px rgba(2, 58, 110, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    inset 0 1px 0 rgba(220, 240, 255, 0.95);
 }
 body.light .about-card:hover,
 body.light .project-card:hover,
 body.light .contact-info-card:hover,
 body.light .contact-form-wrap:hover {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.34) 55%, rgba(255, 255, 255, 0.24) 100%),
-    linear-gradient(115deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 255, 255, 0) 58%),
-    rgba(255, 255, 255, 0.26);
+    linear-gradient(180deg, rgba(215, 235, 252, 0.65) 0%, rgba(215, 235, 252, 0.38) 55%, rgba(215, 235, 252, 0.26) 100%),
+    linear-gradient(115deg, rgba(215, 235, 252, 0) 42%, rgba(215, 235, 252, 0.46) 50%, rgba(215, 235, 252, 0) 58%),
+    rgba(215, 235, 252, 0.28);
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(180, 215, 245, 0.95);
   box-shadow:
     0 30px 60px rgba(2, 58, 110, 0.16),
     0 8px 20px rgba(2, 58, 110, 0.07),
     0 0 0 1px rgba(0, 150, 199, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 0 30px rgba(255, 255, 255, 0.45);
+    inset 0 1px 0 rgba(220, 240, 255, 1),
+    inset 0 0 30px rgba(210, 232, 250, 0.48);
 }
 body.light nav.glass-pill-nav.scrolled .pill-container {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.36) 55%, rgba(255, 255, 255, 0.26) 100%),
-    rgba(255, 255, 255, 0.30);
+    linear-gradient(180deg, rgba(210, 232, 250, 0.68) 0%, rgba(210, 232, 250, 0.40) 55%, rgba(210, 232, 250, 0.28) 100%),
+    rgba(210, 232, 250, 0.32);
   backdrop-filter: blur(30px) saturate(195%);
   -webkit-backdrop-filter: blur(30px) saturate(195%);
-  border-color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(180, 215, 245, 0.85);
   box-shadow:
     0 14px 36px rgba(2, 58, 110, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 1);
+    inset 0 1px 0 rgba(220, 240, 255, 1);
 }
 
 /* ── Hero ── */
@@ -344,19 +389,19 @@ body.light .cic-label { color: var(--muted); }
 body.light .cic-val { color: var(--text); }
 body.light .cic-arrow { color: var(--muted); }
 body.light .cf-input {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(236, 245, 252, 0.62));
+  background: linear-gradient(180deg, rgba(220, 238, 252, 0.80), rgba(210, 232, 250, 0.65));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-color: rgba(255, 255, 255, 0.90);
+  border-color: rgba(180, 215, 245, 0.90);
   box-shadow:
     inset 0 2px 5px rgba(2, 58, 110, 0.07),
-    0 1px 0 rgba(255, 255, 255, 0.85);
+    0 1px 0 rgba(220, 240, 255, 0.85);
   color: var(--text);
 }
 body.light .cf-input::placeholder { color: rgba(74, 96, 128, 0.60); }
 body.light .cf-input:focus {
   border-color: rgba(0, 150, 199, 0.55);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.85));
+  background: linear-gradient(180deg, rgba(230, 244, 255, 0.95), rgba(215, 236, 252, 0.88));
   box-shadow:
     inset 0 2px 5px rgba(2, 58, 110, 0.05),
     0 0 0 3px rgba(0, 150, 199, 0.14);
@@ -369,10 +414,10 @@ body.light .cf-submit:hover { background: #0077A8; }
 
 /* ── About info list ── */
 body.light .info-list li {
-  background: rgba(255, 255, 255, 0.38);
+  background: rgba(210, 232, 250, 0.42);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-color: rgba(255, 255, 255, 0.65);
+  border-color: rgba(180, 215, 245, 0.65);
 }
 
 /* ── Tags & badges ── */
@@ -617,10 +662,11 @@ body.light .splash-progress {
 ═══════════════════════════════════════════════════════ */
 .cursor-glow {
   position: fixed;
-  width: 480px;
-  height: 480px;
+  width: 520px;
+  height: 520px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(42,125,225,0.10) 0%, transparent 65%);
+  /* abu-abu kebiruan — senada cahaya malam di background */
+  background: radial-gradient(circle, rgba(160, 180, 212, 0.11) 0%, rgba(120, 145, 185, 0.05) 40%, transparent 65%);
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 0;
@@ -3007,17 +3053,17 @@ footer {
                 0 0 24px rgba(56, 189, 248, 0.16);
   }
   body.light .pill-container {
-    background: rgba(255, 255, 255, 0.80);
+    background: rgba(210, 232, 250, 0.84);
     backdrop-filter: blur(24px) saturate(190%);
     -webkit-backdrop-filter: blur(24px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(180, 215, 245, 0.78);
     border-bottom: none;
     box-shadow: 0 -10px 25px rgba(2, 58, 110, 0.14),
-                inset 0 1px 1px rgba(255, 255, 255, 1);
+                inset 0 1px 1px rgba(220, 240, 255, 1);
   }
   body.light nav.glass-pill-nav.scrolled .pill-container {
-    background: rgba(255, 255, 255, 0.88);
-    border-color: rgba(255, 255, 255, 0.95);
+    background: rgba(210, 232, 250, 0.92);
+    border-color: rgba(180, 215, 245, 0.95);
   }
   .pill-item {
     padding: 3px 6px;
